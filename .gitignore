@@ -1,0 +1,20 @@
+# IDEs
+.idea/
+.project/
+.vscode/
+
+# JS stuff
+/node_modules/
+
+# Cypress
+**/screenshots/*
+**/videos/*
+**/node_modules/*
+**/reports/*
+
+# Pachage lock
+package-lock.json
+
+# Local files
+.env
+.DS_store

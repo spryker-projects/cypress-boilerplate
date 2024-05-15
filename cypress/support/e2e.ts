@@ -1,0 +1,6 @@
+import './cy-commands/storefront/utility-commands'
+import './cy-commands/storefront/cart-commands'
+import './cy-commands/glue/checkout'
+import './cy-commands/backoffice/oms-transition-commands'
+import 'cypress-plugin-api'
+import 'cypress-mochawesome-reporter/register'

@@ -1,0 +1,42 @@
+{
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^7.8.0",
+    "@typescript-eslint/parser": "^7.8.0",
+    "ajv": "^8.13.0",
+    "cypress": "^13.9.0",
+    "cypress-iframe": "^1.0.1",
+    "cypress-plugin-api": "^2.11.1",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-cypress": "^3.2.0",
+    "eslint-plugin-prettier": "^5.1.3",
+    "prettier": "3.2.5",
+    "typescript": "^5.3.3",
+    "cypress-mochawesome-reporter": "^3.8.2"
+  },
+  "scripts": {
+    "cy:open": "npx cypress open",
+    "cy:run": "npx cypress run",
+    "lint:check": "eslint . ; prettier . --check",
+    "lint:fix": "eslint . --fix ; prettier . --write"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "fs": "^0.0.1-security"
+  },
+  "standard": {
+    "globals": [
+      "cy",
+      "Cypress",
+      "expect",
+      "it",
+      "context",
+      "beforeEach",
+      "before",
+      "after",
+      "describe"
+    ]
+  },
+  "ts-standard": {
+    "project": "./tsconfig.json"
+  }
+}

@@ -1,0 +1,29 @@
+import { GlueRequest } from '../glue-request'
+
+export class AccessToken extends GlueRequest {
+  protected ENDPOINT_NAME = '/access-tokens'
+  protected GLUE_ENDPOINT = this.GLUE_DOMAIN + this.ENDPOINT_NAME
+
+  getCustomerAccessToken = (
+    email: string,
+    password: string
+  ): Cypress.Chainable => {
+    return cy.api({
+      method: 'POST',
+      url: this.GLUE_ENDPOINT,
+      headers: {
+        'Accept-Language': 'de-DE, de;q=0.9',
+      },
+      body: {
+        data: {
+          type: 'access-tokens',
+          attributes: {
+            username: email,
+            password: password,
+          },
+        },
+      },
+      failOnStatusCode: false,
+    })
+  }
+}
