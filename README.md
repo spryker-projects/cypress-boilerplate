@@ -32,7 +32,7 @@ To get started with these tests, follow these setup steps:
 
 - The available environments on which you want to run tests are listed in `.envs` directory.
 - For each environment there should be a separate file with name `.env.<env_name>`, f.e. `.env.staging`
-- If you need to add a new environment, you should add new file in `.envs` folder and also add your environment name to `cypress.config.ts` - `environemnt` variable
+- If you need to add a new environment, you should add new file in `.envs` folder and also add your environment name to `cypress.config.ts` - `environments` variable
 - Inside the file there should be URLs for Yves, Backoffice and GLUE
 - If you need other sensitive env-dependent variables, you can create `.env` file where you can add these variables and which can be excluded from source control
 
@@ -67,13 +67,13 @@ npm run cy:run
 Run code formatting checks
 
 ```bash
-npm run lint:check
+npm run code:check
 ```
 
 Fix code formatting
 
 ```bash
-npm run lint:fix
+npm run code:fix
 ```
 
 ## Report
