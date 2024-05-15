@@ -3,6 +3,7 @@
     "target": "es6",
     "lib": ["es6", "dom"],
     "types": ["cypress", "node"],
+    "module": "commonjs",
     "strictNullChecks": true,
     "baseUrl": ".",
     "allowSyntheticDefaultImports": true,

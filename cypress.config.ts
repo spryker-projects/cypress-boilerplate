@@ -33,8 +33,9 @@ module.exports = defineConfig({
   e2e: {
     supportFile: 'cypress/support/e2e.ts',
 
-    setupNodeEvents: (on, config) => {
-      require('cypress-mochawesome-reporter/plugin')(on)
+    setupNodeEvents: async (on, config) => {
+      const plugin = await import('cypress-mochawesome-reporter/plugin')
+      plugin.default(on)
       on('task', {})
       //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       // ENVIRONMENT SETUP
@@ -59,17 +60,20 @@ module.exports = defineConfig({
       //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       // ENVIRONMENT VARIABLES (default)
       //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-      const envVars = dotenvConfig({
-        path: process.cwd() + '/.env',
-      })
+      const envPath = process.cwd() + '/.env'
+      if (fs.existsSync(envPath)) {
+        const envVars = dotenvConfig({
+          path: envPath,
+        })
 
-      if (envVars.error) {
-        throw envVars.error
-      }
+        if (envVars.error) {
+          throw envVars.error
+        }
 
-      // Iterate over each var and pass it to config.env use the key as key and the value as value
-      for (const key in envVars.parsed) {
-        config.env[key] = envVars.parsed[key]
+        // Iterate over each var and pass it to config.env use the key as key and the value as value
+        for (const key in envVars.parsed) {
+          config.env[key] = envVars.parsed[key]
+        }
       }
 
       //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -98,17 +102,18 @@ module.exports = defineConfig({
       //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       // Define the environment file to use
       const envFileName = process.cwd() + `/.envs/.env.${environment}`
+      if (fs.existsSync(envFileName)) {
+        const result = dotenvConfig({ path: envFileName })
 
-      const result = dotenvConfig({ path: envFileName })
+        if (result.error) {
+          throw result.error
+        }
 
-      if (result.error) {
-        throw result.error
-      }
-
-      // Iterate over each var and pass it to config.env use the key as key and the value as value
-      for (const key in result.parsed) {
-        if (!(key in config.env)) {
-          config.env[key] = result.parsed[key]
+        // Iterate over each var and pass it to config.env use the key as key and the value as value
+        for (const key in result.parsed) {
+          if (!(key in config.env)) {
+            config.env[key] = result.parsed[key]
+          }
         }
       }
 
