@@ -31,7 +31,10 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Install dependencies
-        run: npm i
+        run: npm install
+
+      - name: Add `node_modules/.bin` to PATH
+        run: echo "$(npm bin):$PATH" >> $GITHUB_ENV
 
       - name: Run ESLint & Prettier
-        run: eslint . ; prettier . --check
+        run: npm run lint:check
