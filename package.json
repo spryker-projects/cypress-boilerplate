@@ -16,8 +16,10 @@
   "scripts": {
     "cy:open": "npx cypress open",
     "cy:run": "npx cypress run",
-    "lint:check": "eslint . ; prettier . --check",
-    "lint:fix": "eslint . --fix ; prettier . --write"
+    "lint:check": "eslint . ",
+    "prettier:check": "prettier . --check",
+    "code:check": "eslint . ; prettier . --check",
+    "code:fix": "eslint . --fix ; prettier . --write"
   },
   "dependencies": {
     "dotenv": "^16.4.5",

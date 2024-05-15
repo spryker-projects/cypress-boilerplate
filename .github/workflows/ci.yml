@@ -28,5 +28,8 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run ESLint & Prettier
+      - name: Run ESLint
         run: npm run lint:check
+
+      - name: Check Prettier Formatting
+        run: npm run prettier:check
