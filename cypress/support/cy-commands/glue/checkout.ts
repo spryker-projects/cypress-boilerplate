@@ -15,7 +15,7 @@ Cypress.Commands.add(
     password: string,
     sku: string,
     shipment: number,
-    PaymentProvider: string,
+    paymentProvider: string,
     paymentMethod: string,
     merchant: string
   ) => {
@@ -48,7 +48,7 @@ Cypress.Commands.add(
             cartId,
             email,
             shipment,
-            PaymentProvider,
+            paymentProvider,
             paymentMethod
           )
           .then((response) => {

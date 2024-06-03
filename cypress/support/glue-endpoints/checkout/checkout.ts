@@ -9,7 +9,7 @@ export class Checkout extends GlueRequest {
     cartId: string,
     email: string,
     shipment: number,
-    PaymentProvider: string,
+    paymentProvider: string,
     paymentMethod: string
   ): Cypress.Chainable => {
     return cy.api({
@@ -64,7 +64,7 @@ export class Checkout extends GlueRequest {
             payments: [
               {
                 paymentMethodName: paymentMethod,
-                paymentProviderName: PaymentProvider,
+                paymentProviderName: paymentProvider,
               },
             ],
             shipment: {

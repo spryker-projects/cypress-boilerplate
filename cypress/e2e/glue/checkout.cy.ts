@@ -14,6 +14,21 @@ const cartEndpoint = new Carts()
 const itemsEndpoint = new Items()
 const checkoutEndpoint = new Checkout()
 
+before(() => {
+  cy.deleteAllShoppingCarts(
+    customerCredentials.email,
+    customerCredentials.password
+  )
+})
+
+after(() => {
+  cy.checkAndDeleteAllCustomerAddresses(
+    customerCredentials.email,
+    customerCredentials.password,
+    customerCredentials.reference
+  )
+})
+
 context('Customer checkout', () => {
   it('can place order via GLUE', () => {
     let token: string
