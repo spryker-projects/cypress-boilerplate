@@ -18,7 +18,7 @@ declare namespace Cypress {
       password: string,
       sku: string,
       shipment: number,
-      PaymentProvider: string,
+      paymentProvider: string,
       paymentMethod: string,
       merchant: string
     ): Cypress.Chainable<any>
@@ -27,5 +27,13 @@ declare namespace Cypress {
      * @example cy.triggerOmsTransition()
      */
     triggerOmsTransition(): void
+
+    checkAndDeleteAllCustomerAddresses(
+      email: string,
+      password: string,
+      customerReference: string
+    ): void
+
+    deleteAllShoppingCarts(email: string, password: string): void
   }
 }
