@@ -24,9 +24,9 @@ declare namespace Cypress {
     ): Cypress.Chainable<any>
 
     /**
-     * @example cy.triggerOmsTransition()
+     * * @example cy.triggerOmsTransition('/path/to/spryker/env')
      */
-    triggerOmsTransition(): void
+    triggerOmsTransition(path?: string): void
 
     checkAndDeleteAllCustomerAddresses(
       email: string,
