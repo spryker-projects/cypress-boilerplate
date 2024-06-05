@@ -40,15 +40,19 @@ module.exports = defineConfig({
       //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       // ENVIRONMENT SETUP
       //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-      // Use testing as the default environment to run E2E tests on
+      // Use local as the default environment to run E2E tests on
       let environment = 'local'
 
       // When the environment is set, use this environment. This can be set via the command line `npx cypress run --env environment=staging`
       // Possible options are: local, testing, staging, production
       const environments = ['local', 'testing', 'staging', 'production']
 
+      // Check if the environment is defined in Cypress environment configuration
       if (typeof config.env.environment !== 'undefined') {
         environment = config.env.environment
+      } else {
+        // If not defined, set it to default
+        config.env.environment = environment
       }
 
       if (!environments.includes(environment)) {

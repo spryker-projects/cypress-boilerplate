@@ -15,7 +15,6 @@ let orderReference: string
 context('Order management', () => {
   before(function () {
     // placing an order for processing
-    cy.log(Cypress.env('FAKE_VAR'))
     cy.placeOrderViaGlue(
       customerCredentials.email,
       customerCredentials.password,
