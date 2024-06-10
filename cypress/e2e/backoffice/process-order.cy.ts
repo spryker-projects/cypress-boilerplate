@@ -18,11 +18,12 @@ context('Order management', () => {
     cy.placeOrderViaGlue(
       customerCredentials.email,
       customerCredentials.password,
-      productData.availableProduct.concreteSku,
+      productData.availableOffer.concreteSku,
       checkoutData.glueShipment.id,
       checkoutData.gluePayment.providerName,
       checkoutData.gluePayment.methodName,
-      productData.availableProduct.merchantReference
+      productData.availableOffer.offer,
+      productData.availableOffer.merchantReference
     ).then((response: string) => {
       orderReference = response
     })
@@ -42,22 +43,23 @@ context('Order management', () => {
     if (Cypress.env('environment') === 'local') {
       cy.triggerOmsTransition()
     }
-    login.login(userCredentials.email, userCredentials.password)
+    login.login(
+      userCredentials.backofficeUser.email,
+      userCredentials.backofficeUser.password
+    )
     orders.visit()
     // verify that the order placed in before hook exists in BO as the first order in the list
     orders.getOrderReference(0).should('have.text', orderReference)
-    orders.viewOrder(0)
+    orders.viewOrderByPosition(0)
     // check that price for the product is still as it was in the shop
-    order
-      .getOrderSubtotal()
-      .should('contain', productData.availableProduct.price)
+    order.getOrderSubtotal().should('contain', productData.availableOffer.price)
     // clicks the oms trigger with the name 'Pay'
     order.triggerOms('Pay')
     order
       .getSuccessfulOrderMessages()
       .should('contain', 'Status change triggered successfully.')
     order
-      .getOrderItemHistory(productData.availableProduct.concreteSku)
+      .getOrderItemHistory(productData.availableOffer.concreteSku)
       .should('contain', 'tax invoice submitted')
   })
 })

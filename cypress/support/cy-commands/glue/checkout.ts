@@ -17,6 +17,7 @@ Cypress.Commands.add(
     shipment: number,
     paymentProvider: string,
     paymentMethod: string,
+    offer: string,
     merchant: string
   ) => {
     let token: string
@@ -36,7 +37,7 @@ Cypress.Commands.add(
       })
       .then(({ token, cartId }) => {
         return itemsEndpoint
-          .addOfferToCart(token, cartId, sku, 1, merchant)
+          .addOfferToCart(token, cartId, sku, 1, offer, merchant)
           .then(() => {
             return { token, cartId }
           })

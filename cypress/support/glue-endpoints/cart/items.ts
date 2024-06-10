@@ -41,6 +41,7 @@ export class Items extends GlueRequest {
     cartId: string,
     sku: string,
     qty: number,
+    offer: string,
     merchant: string
   ): Cypress.Chainable => {
     this.setEndpoint(cartId)
@@ -57,6 +58,7 @@ export class Items extends GlueRequest {
           attributes: {
             sku: sku,
             quantity: qty,
+            productOfferReference: offer,
             merchantReference: merchant,
           },
         },

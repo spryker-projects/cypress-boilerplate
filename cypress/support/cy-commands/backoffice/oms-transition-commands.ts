@@ -1,3 +1,12 @@
+import userCredentials from '../../../fixtures/user-credentials.json'
+import { BackofficeLoginPage } from '../../../support/page-objects/backoffice/login/login-page'
+import { OrderListPage } from '../../../support//page-objects//backoffice//order-management//order-list-page'
+import { OrderDetailsPage } from '../../../support//page-objects//backoffice/order-management/order-details-page'
+
+const login = new BackofficeLoginPage()
+const orders = new OrderListPage()
+const order = new OrderDetailsPage()
+
 Cypress.Commands.add('triggerOmsTransition', (path = '') => {
   // keep in mind that by default exec() command runs commands in the root Cypress tests directly
   // please provide the correct path to your Spryker env
@@ -14,3 +23,45 @@ Cypress.Commands.add('triggerOmsTransition', (path = '') => {
     .its('code')
     .should('not.eq', 0)
 })
+
+Cypress.Commands.add('sendOrderToMerchant', (orderReference: string) => {
+  cy.log(userCredentials.backofficeUser.email)
+  login.login(
+    userCredentials.backofficeUser.email,
+    userCredentials.backofficeUser.password
+  )
+  orders.visit()
+  orders.viewOrderByReference(orderReference)
+  order.triggerOms('Pay')
+})
+
+Cypress.Commands.add('waitForOrderProcessing',(desiredStatus: string, maxRetries: number) => {
+    function findStatusWithText(desiredStatus, retries = 0) {
+      if (retries >= maxRetries) {
+        throw new Error(
+          `Max retries reached while looking for order trigger with text "${desiredStatus}"`
+        )
+      }
+
+      // Search for the link with the specified order stauts
+      cy.get('a').then(($links) => {
+        const matchingStatus = $links.filter((index, lnk) => {
+          return lnk.innerText.includes(desiredStatus)
+        })
+
+        if (matchingStatus.length > 0) {
+          // Status found, you can perform other tasks or assertions here if needed
+          cy.log(`Status "${desiredStatus}" was found`)
+        } else {
+          // Status not found, reload and try again
+          cy.reload().then(() => {
+            cy.wait(10000)
+            findStatusWithText(desiredStatus, retries + 1)
+          })
+        }
+      })
+    }
+
+    findStatusWithText(desiredStatus)
+  }
+)

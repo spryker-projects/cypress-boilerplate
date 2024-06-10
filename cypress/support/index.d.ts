@@ -11,7 +11,7 @@ declare namespace Cypress {
     createNewCart(): void
 
     /**
-     * @example cy.placeOrderViaGlue('sonia@spryker.com','change123','464012',1, 'Dummy Payment', 'Invoice','MER0001')
+     * @example cy.placeOrderViaGlue('sonia@spryker.com','change123','464012',1, 'Dummy Payment', 'Invoice', 'offer123', 'MER0001')
      */
     placeOrderViaGlue(
       email: string,
@@ -20,6 +20,7 @@ declare namespace Cypress {
       shipment: number,
       paymentProvider: string,
       paymentMethod: string,
+      offer: string,
       merchant: string
     ): Cypress.Chainable<any>
 
@@ -35,5 +36,15 @@ declare namespace Cypress {
     ): void
 
     deleteAllShoppingCarts(email: string, password: string): void
+
+    /**
+     * * @example cy.sendOrderToMerchant('DE--1')
+     */
+    sendOrderToMerchant(orderReference: string): void
+
+    /**
+     * * @example cy.sendOrderToMerchant(''sent to merchant', 20)
+     */
+    waitForOrderProcessing(desiredStatus: string, maxRetries: number): void
   }
 }
