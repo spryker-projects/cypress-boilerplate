@@ -44,8 +44,7 @@ context('Merchant Order management', () => {
     if (Cypress.env('environment') === 'local') {
       cy.triggerOmsTransition()
     } else {
-      //wait till order is processed on cloud environemnt
-      //cy.wait(50000)
+      //wait till order is processed on environemnt wiht enables scheduler i.e. cloud environment
       cy.waitForOrderProcessing('sent to merchant', 20)
     }
     //process order in merchant portal
