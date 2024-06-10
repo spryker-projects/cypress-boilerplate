@@ -58,9 +58,10 @@ context('Customer checkout', () => {
           .addOfferToCart(
             token,
             cartId,
-            productData.availableProduct.concreteSku,
+            productData.availableOffer.concreteSku,
             1,
-            productData.availableProduct.merchantReference
+            productData.availableOffer.offer,
+            productData.availableOffer.merchantReference
           )
           .then((response) => {
             expect(response.isOkStatusCode).to.be.true
