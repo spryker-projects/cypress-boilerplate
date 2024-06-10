@@ -6,6 +6,7 @@ It includes examples of:
 
 - Yves tests - checkout process
 - Backoffice tests - order management process
+- Merchant Portal tests - order management process
 - Glue API tests - checkout process with response schema validation
 
 It also illustrates the following testing patterns and capabilities as:
