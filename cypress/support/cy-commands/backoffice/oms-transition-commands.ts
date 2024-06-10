@@ -35,7 +35,9 @@ Cypress.Commands.add('sendOrderToMerchant', (orderReference: string) => {
   order.triggerOms('Pay')
 })
 
-Cypress.Commands.add('waitForOrderProcessing',(desiredStatus: string, maxRetries: number) => {
+Cypress.Commands.add(
+  'waitForOrderProcessing',
+  (desiredStatus: string, maxRetries: number) => {
     function findStatusWithText(desiredStatus, retries = 0) {
       if (retries >= maxRetries) {
         throw new Error(
