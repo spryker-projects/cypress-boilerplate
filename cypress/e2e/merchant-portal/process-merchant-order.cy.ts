@@ -38,13 +38,14 @@ context('Merchant Order management', () => {
   })
 
   it('merchant can process orders', () => {
-    cy.sendOrderToMerchant(orderReference)
+    cy.triggerOmsEvent(orderReference, 'Pay')
     // if the tests are run on an env without active scheduler, e.g. local env, we will need to trigger oms transition using CLI commands
     // make sure the location from which you run cypress tests has access to Spryker env
     if (Cypress.env('environment') === 'local') {
       cy.triggerOmsTransition()
+      cy.waitForOrderProcessing('sent to merchant', 20)
     } else {
-      //wait till order is processed on environemnt wiht enables scheduler i.e. cloud environment
+      //wait till order is processed on environment with enables scheduler i.e. cloud environment
       cy.waitForOrderProcessing('sent to merchant', 20)
     }
     //process order in merchant portal

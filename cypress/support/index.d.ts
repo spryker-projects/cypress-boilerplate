@@ -38,12 +38,12 @@ declare namespace Cypress {
     deleteAllShoppingCarts(email: string, password: string): void
 
     /**
-     * * @example cy.sendOrderToMerchant('DE--1')
+     * * @example cy.triggerOmsEvent('DE--1', 'Pay')
      */
-    sendOrderToMerchant(orderReference: string): void
+    triggerOmsEvent(orderReference: string, eventName: string): void
 
     /**
-     * * @example cy.sendOrderToMerchant(''sent to merchant', 20)
+     * * @example cy.waitForOrderProcessing('sent to merchant', 20)
      */
     waitForOrderProcessing(desiredStatus: string, maxRetries: number): void
   }
