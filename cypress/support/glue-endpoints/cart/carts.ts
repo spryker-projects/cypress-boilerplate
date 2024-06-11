@@ -2,7 +2,6 @@ import { GlueRequest } from '../glue-request'
 
 export class Carts extends GlueRequest {
   protected ENDPOINT_NAME = '/carts'
-  protected GLUE_ENDPOINT = this.GLUE_DOMAIN + this.ENDPOINT_NAME
 
   createGrossCart = (token: string): Cypress.Chainable => {
     const currentDateTime = new Date()
