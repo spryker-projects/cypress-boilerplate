@@ -2,7 +2,6 @@ import { GlueRequest } from '../glue-request'
 
 export class Checkout extends GlueRequest {
   protected ENDPOINT_NAME = '/checkout?include=orders'
-  protected GLUE_ENDPOINT = this.GLUE_DOMAIN + this.ENDPOINT_NAME
 
   placeOrder = (
     token: string,

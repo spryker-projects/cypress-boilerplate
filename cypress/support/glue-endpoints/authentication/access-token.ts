@@ -2,7 +2,6 @@ import { GlueRequest } from '../glue-request'
 
 export class AccessToken extends GlueRequest {
   protected ENDPOINT_NAME = '/access-tokens'
-  protected GLUE_ENDPOINT = this.GLUE_DOMAIN + this.ENDPOINT_NAME
 
   getCustomerAccessToken = (
     email: string,
