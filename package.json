@@ -25,19 +25,6 @@
     "dotenv": "^16.4.5",
     "fs": "^0.0.1-security"
   },
-  "standard": {
-    "globals": [
-      "cy",
-      "Cypress",
-      "expect",
-      "it",
-      "context",
-      "beforeEach",
-      "before",
-      "after",
-      "describe"
-    ]
-  },
   "ts-standard": {
     "project": "./tsconfig.json"
   }
