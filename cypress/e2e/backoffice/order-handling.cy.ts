@@ -17,18 +17,20 @@ let orderReference: string
 context('Order management', () => {
   before(function () {
     // placing an order for processing
-    orderDetailsPageScenario.checkout(
-      customerCredentials.email,
-      customerCredentials.password,
-      productData.availableOffer.concreteSku,
-      checkoutData.glueShipment.id,
-      checkoutData.gluePayment.providerName,
-      checkoutData.gluePayment.methodName,
-      productData.availableOffer.offer,
-      productData.availableOffer.merchantReference
-    ).then((response: string) => {
-      orderReference = response
-    })
+    orderDetailsPageScenario
+      .checkout(
+        customerCredentials.email,
+        customerCredentials.password,
+        productData.availableOffer.concreteSku,
+        checkoutData.glueShipment.id,
+        checkoutData.gluePayment.providerName,
+        checkoutData.gluePayment.methodName,
+        productData.availableOffer.offer,
+        productData.availableOffer.merchantReference
+      )
+      .then((response: string) => {
+        orderReference = response
+      })
   })
 
   after(() => {
@@ -49,8 +51,6 @@ context('Order management', () => {
     orders.getOrderReference(0).should('have.text', orderReference)
     orders.viewOrderByPosition(0)
     // check that customer email is correct on the order details page
-    order
-      .getCustomerEmail()
-      .should('have.text', customerCredentials.email)
+    order.getCustomerEmail().should('have.text', customerCredentials.email)
   })
 })
