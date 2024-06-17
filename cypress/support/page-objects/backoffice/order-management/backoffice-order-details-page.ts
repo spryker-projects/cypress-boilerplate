@@ -2,7 +2,7 @@ import { AbstractPage } from '../../abstract-page'
 
 const omsTriggerForm = 'form[name="oms_trigger_form"]'
 
-export class OrderDetailsPage extends AbstractPage {
+export class BackofficeOrderDetailsPage extends AbstractPage {
   protected PAGE_URL = ''
 
   openOrderDetails = (orderId: number): void => {

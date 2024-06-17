@@ -1,11 +1,11 @@
-import userCredentials from '../../../fixtures/user-credentials.json'
-import { BackofficeLoginPage } from '../../page-objects/backoffice/login/login-page'
-import { OrderListPage } from '../../page-objects/backoffice/order-management/order-list-page'
-import { OrderDetailsPage } from '../../page-objects/backoffice/order-management/order-details-page'
+import userCredentials from '../../../fixtures/user-data.json'
+import { BackofficeLoginPage } from '../../page-objects/backoffice/login/backoffice-login-page'
+import { BackofficeOrderListPage } from '../../page-objects/backoffice/order-management/backoffice-order-list-page'
+import { BackofficeOrderDetailsPage } from '../../page-objects/backoffice/order-management/backoffice-order-details-page'
 
 const login = new BackofficeLoginPage()
-const orders = new OrderListPage()
-const order = new OrderDetailsPage()
+const orders = new BackofficeOrderListPage()
+const order = new BackofficeOrderDetailsPage()
 
 Cypress.Commands.add('triggerOmsTransition', (path = '') => {
   // keep in mind that by default exec() command runs commands in the root Cypress tests directly

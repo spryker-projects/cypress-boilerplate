@@ -1,6 +1,6 @@
-import { SearchPage } from './search-page'
+import { StorefrontSearchPage } from './storefront-search-page'
 
-export class SearchResultsPage extends SearchPage {
+export class StorefrontSearchResultsPage extends StorefrontSearchPage {
   private getSearchResultsPage = (): Cypress.Chainable => {
     return cy.get('form[class*="main__catalog-page-content"]')
   }

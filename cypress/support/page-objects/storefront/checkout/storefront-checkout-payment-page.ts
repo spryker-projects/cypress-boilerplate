@@ -2,7 +2,7 @@ import { AbstractPage } from '../../abstract-page'
 
 const paymentForm = 'form[name="paymentForm"]'
 
-export class CheckoutPaymentPage extends AbstractPage {
+export class StorefrontCheckoutPaymentPage extends AbstractPage {
   protected PAGE_URL = Cypress.env('STOREFRONT_URL') + '/en/checkout/payment'
 
   selectPaymentMethod = (paymentName: string): void => {

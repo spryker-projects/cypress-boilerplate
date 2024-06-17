@@ -1,17 +1,17 @@
-import customerCredentials from '../../fixtures/customer-credentials.json'
+import customerCredentials from '../../fixtures/customer-data.json'
 import productData from '../../fixtures/product-data.json'
 import checkoutData from '../../fixtures/checkout-data.json'
 
-import { AccessToken } from '../../support/glue-endpoints/authentication/access-token'
+import { AccessTokens } from '../../support/glue-endpoints/authentication/access-tokens'
 import { Carts } from '../../support/glue-endpoints/cart/carts'
-import { Items } from '../../support/glue-endpoints/cart/items'
+import { CartsItems } from '../../support/glue-endpoints/cart/carts-items'
 import { Checkout } from '../../support/glue-endpoints/checkout/checkout'
 import { validateSchema } from '../../support/api-helper/api-helper'
-import accessTokenSchema from '../../support/glue-endpoints/authentication/access-token.response'
+import accessTokenSchema from '../../support/glue-endpoints/authentication/access-token-response'
 
-const tokenEndpoint = new AccessToken()
+const tokenEndpoint = new AccessTokens()
 const cartEndpoint = new Carts()
-const itemsEndpoint = new Items()
+const itemsEndpoint = new CartsItems()
 const checkoutEndpoint = new Checkout()
 
 before(() => {

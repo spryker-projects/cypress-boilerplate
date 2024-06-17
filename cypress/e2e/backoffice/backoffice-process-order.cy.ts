@@ -1,14 +1,14 @@
-import customerCredentials from '../../fixtures/customer-credentials.json'
+import customerCredentials from '../../fixtures/customer-data.json'
 import productData from '../../fixtures/product-data.json'
 import checkoutData from '../../fixtures/checkout-data.json'
-import userCredentials from '../../fixtures/user-credentials.json'
-import { BackofficeLoginPage } from '../../support/page-objects/backoffice/login/login-page'
-import { OrderListPage } from '../../support/page-objects/backoffice/order-management/order-list-page'
-import { OrderDetailsPage } from '../../support/page-objects/backoffice/order-management/order-details-page'
+import userCredentials from '../../fixtures/user-data.json'
+import { BackofficeLoginPage } from '../../support/page-objects/backoffice/login/backoffice-login-page'
+import { BackofficeOrderListPage } from '../../support/page-objects/backoffice/order-management/backoffice-order-list-page'
+import { BackofficeOrderDetailsPage } from '../../support/page-objects/backoffice/order-management/backoffice-order-details-page'
 
 const login = new BackofficeLoginPage()
-const orders = new OrderListPage()
-const order = new OrderDetailsPage()
+const orders = new BackofficeOrderListPage()
+const order = new BackofficeOrderDetailsPage()
 
 let orderReference: string
 

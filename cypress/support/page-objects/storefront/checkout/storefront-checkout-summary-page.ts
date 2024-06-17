@@ -2,7 +2,7 @@ import { AbstractPage } from '../../abstract-page'
 
 const summaryForm = 'form[name="summaryForm"]'
 
-export class CheckoutSummaryPage extends AbstractPage {
+export class StorefrontCheckoutSummaryPage extends AbstractPage {
   protected PAGE_URL = Cypress.env('STOREFRONT_URL') + 'en/checkout/summary'
 
   getAcceptTermsAndConditionsCheckbox = (): Cypress.Chainable => {

@@ -1,6 +1,6 @@
 import { AbstractPage } from '../../abstract-page'
 
-export class OrderListPage extends AbstractPage {
+export class BackofficeOrderListPage extends AbstractPage {
   protected PAGE_URL = Cypress.env('BACK_OFFICE_URL') + '/sales'
 
   getOrderInTableByPosition = (orderPosition: number): Cypress.Chainable => {

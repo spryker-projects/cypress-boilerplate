@@ -2,7 +2,7 @@ import { AbstractPage } from '../../abstract-page'
 
 const quoteForm = 'form[name="quoteForm"]'
 
-export class CreateCartPage extends AbstractPage {
+export class StorefrontCreateCartPage extends AbstractPage {
   protected PAGE_URL = Cypress.env('STOREFRONT_URL') + '/en/multi-cart/create'
 
   getCartNameField = (): Cypress.Chainable => {

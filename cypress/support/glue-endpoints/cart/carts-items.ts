@@ -1,6 +1,6 @@
 import { GlueRequest } from '../glue-request'
 
-export class Items extends GlueRequest {
+export class CartsItems extends GlueRequest {
   protected ENDPOINT_NAME = ''
 
   private setEndpoint(cartId: string): void {

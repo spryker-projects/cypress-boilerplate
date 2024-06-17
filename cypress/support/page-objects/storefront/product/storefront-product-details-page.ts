@@ -1,6 +1,6 @@
 import { AbstractPage } from '../../abstract-page'
 
-export class ProductDetailsPage extends AbstractPage {
+export class StorefrontProductDetailsPage extends AbstractPage {
   protected PAGE_URL = ''
 
   getProductName = (): Cypress.Chainable => {

@@ -1,6 +1,6 @@
-import { AccessToken } from '../../glue-endpoints/authentication/access-token'
+import { AccessTokens } from '../../glue-endpoints/authentication/access-tokens'
 
-const tokenEndpoint = new AccessToken()
+const tokenEndpoint = new AccessTokens()
 
 Cypress.Commands.add(
   'checkAndDeleteAllCustomerAddresses',

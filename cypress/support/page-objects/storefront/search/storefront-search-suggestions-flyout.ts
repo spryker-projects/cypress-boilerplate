@@ -1,6 +1,6 @@
-import { SearchPage } from './search-page'
+import { StorefrontSearchPage } from './storefront-search-page'
 
-export class SearchSuggestionsFlyout extends SearchPage {
+export class StorefrontSearchSuggestionsFlyout extends StorefrontSearchPage {
   getSearchSuggestionFlyout = (): Cypress.Chainable => {
     return cy.get('suggest-search')
   }

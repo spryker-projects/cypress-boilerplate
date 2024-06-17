@@ -1,6 +1,6 @@
 import { AbstractPage } from '../../abstract-page'
 
-export class CartFlyout extends AbstractPage {
+export class StorefrontCartFlyout extends AbstractPage {
   protected PAGE_URL = ''
 
   getCartFlyoutIcon = (): Cypress.Chainable => {

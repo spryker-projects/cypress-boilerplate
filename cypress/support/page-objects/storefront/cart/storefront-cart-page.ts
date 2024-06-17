@@ -1,6 +1,6 @@
 import { AbstractPage } from '../../abstract-page'
 
-export class CartPage extends AbstractPage {
+export class StorefrontCartPage extends AbstractPage {
   protected PAGE_URL = Cypress.env('STOREFRONT_URL') + '/en/cart'
 
   getCartItemsList = (): Cypress.Chainable => {

@@ -1,10 +1,10 @@
-import customerCredentials from '../../fixtures/customer-credentials.json'
+import customerCredentials from '../../fixtures/customer-data.json'
 import productData from '../../fixtures/product-data.json'
 import checkoutData from '../../fixtures/checkout-data.json'
-import userCredentials from '../../fixtures/user-credentials.json'
-import { MPLoginPage } from '../../support/page-objects/merchant-portal/login/login-page'
-import { MerchantOrderListPage } from '../../support/page-objects/merchant-portal/order-management/order-list-page'
-import { MerchantOrderDetailsPage } from '../../support/page-objects/merchant-portal/order-management/order-details-page'
+import userCredentials from '../../fixtures/user-data.json'
+import { MPLoginPage } from '../../support/page-objects/merchant-portal/login/merchant-portal-login-page'
+import { MerchantOrderListPage } from '../../support/page-objects/merchant-portal/order-management/merchant-portal-order-list-page'
+import { MerchantOrderDetailsPage } from '../../support/page-objects/merchant-portal/order-management/merchant-portal-order-details-page'
 
 const login = new MPLoginPage()
 const orders = new MerchantOrderListPage()
