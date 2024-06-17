@@ -56,4 +56,8 @@ export class OrderDetailsPage extends AbstractPage {
       '[data-qa="item-total-amount"]'
     )
   }
+
+  getCustomerEmail = (): Cypress.Chainable => {
+    return cy.get('#customer dt:contains("Email") + dd')
+  }
 }
