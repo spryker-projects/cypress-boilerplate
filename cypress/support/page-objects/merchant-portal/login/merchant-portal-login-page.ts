@@ -2,7 +2,7 @@ import { AbstractPage } from '../../abstract-page'
 
 const loginForm = 'form[name="security-merchant-portal-gui"]'
 
-export class MPLoginPage extends AbstractPage {
+export class MerchantLoginPage extends AbstractPage {
   protected PAGE_URL =
     Cypress.env('MP_URL') + '/security-merchant-portal-gui/login'
 

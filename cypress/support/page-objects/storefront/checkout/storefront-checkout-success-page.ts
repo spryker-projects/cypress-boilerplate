@@ -1,6 +1,6 @@
 import { AbstractPage } from '../../abstract-page'
 
-export class CheckoutSuccessPage extends AbstractPage {
+export class StorefrontCheckoutSuccessPage extends AbstractPage {
   protected PAGE_URL = Cypress.env('STOREFRONT_URL') + '/en/checkout/success'
 
   checkOrderSuccess = (): void => {

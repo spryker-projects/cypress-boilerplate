@@ -1,6 +1,6 @@
 import { AbstractPage } from '../../abstract-page'
 
-export class SearchPage extends AbstractPage {
+export class StorefrontSearchPage extends AbstractPage {
   protected PAGE_URL = Cypress.env('STOREFRONT_URL') + '/en/search'
 
   getSearchField = (): Cypress.Chainable => {

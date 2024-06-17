@@ -2,7 +2,7 @@ import { AbstractPage } from '../../abstract-page'
 
 const addressForm = 'form[name="addressesForm"]'
 
-export class CheckoutAddressPage extends AbstractPage {
+export class StorefrontCheckoutAddressPage extends AbstractPage {
   protected PAGE_URL = Cypress.env('STOREFRONT_URL') + '/en/checkout/address'
 
   getShippingAddressDropdown = (): Cypress.Chainable => {

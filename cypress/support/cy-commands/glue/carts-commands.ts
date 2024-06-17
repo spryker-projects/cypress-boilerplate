@@ -1,7 +1,7 @@
-import { AccessToken } from '../../glue-endpoints/authentication/access-token'
+import { AccessTokens } from '../../glue-endpoints/authentication/access-tokens'
 import { Carts } from '../../glue-endpoints/cart/carts'
 
-const tokenEndpoint = new AccessToken()
+const tokenEndpoint = new AccessTokens()
 const cartEndpoint = new Carts()
 
 Cypress.Commands.add(

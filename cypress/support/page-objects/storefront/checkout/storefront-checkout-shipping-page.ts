@@ -2,7 +2,7 @@ import { AbstractPage } from '../../abstract-page'
 
 const shipmentForm = 'form[name="shipmentCollectionForm"]'
 
-export class CheckoutShippingPage extends AbstractPage {
+export class StorefrontCheckoutShippingPage extends AbstractPage {
   protected PAGE_URL = Cypress.env('STOREFRONT_URL') + '/en/checkout/shipment'
 
   selectShipment = (shipmentName: string): void => {

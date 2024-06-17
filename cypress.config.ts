@@ -2,7 +2,7 @@ import { defineConfig } from 'cypress'
 import * as fs from 'fs'
 import { config as dotenvConfig } from 'dotenv'
 
-module.exports = defineConfig({
+export default defineConfig({
   watchForFileChanges: false,
   screenshotOnRunFailure: true,
   trashAssetsBeforeRuns: true,
@@ -16,6 +16,7 @@ module.exports = defineConfig({
   videosFolder: 'cypress/data/videos',
   supportFolder: 'cypress/support',
   experimentalModifyObstructiveThirdPartyCode: true,
+  experimentalMemoryManagement: true,
   pageLoadTimeout: 60000,
   viewportWidth: 1280,
   viewportHeight: 800,
@@ -139,5 +140,3 @@ module.exports = defineConfig({
     DEFAULT_ENVIRONMENT: 'local',
   },
 })
-
-export default defineConfig
