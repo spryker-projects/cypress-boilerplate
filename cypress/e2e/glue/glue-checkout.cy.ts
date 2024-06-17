@@ -7,7 +7,7 @@ import { Carts } from '../../support/glue-endpoints/cart/carts'
 import { CartsItems } from '../../support/glue-endpoints/cart/carts-items'
 import { Checkout } from '../../support/glue-endpoints/checkout/checkout'
 import { validateSchema } from '../../support/api-helper/api-helper'
-import accessTokenSchema from '../../support/glue-endpoints/authentication/access-token-response'
+import accessTokenSchema from '../../support/glue-endpoints/authentication/access-tokens-response'
 
 const tokenEndpoint = new AccessTokens()
 const cartEndpoint = new Carts()
