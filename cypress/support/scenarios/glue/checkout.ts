@@ -9,7 +9,7 @@ const cartEndpoint = new Carts()
 const itemsEndpoint = new Items()
 const checkoutEndpoint = new Checkout()
 
-export class OrderDetailsPageScenario extends GlueRequest {
+export class CheckoutScenario extends GlueRequest {
   protected ENDPOINT_NAME = ''
 
   checkout = (

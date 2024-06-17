@@ -5,19 +5,19 @@ import userCredentials from '../../fixtures/user-credentials.json'
 import { BackofficeLoginPage } from '../../support/page-objects/backoffice/login/login-page'
 import { OrderListPage } from '../../support/page-objects/backoffice/order-management/order-list-page'
 import { OrderDetailsPage } from '../../support/page-objects/backoffice/order-management/order-details-page'
-import { OrderDetailsPageScenario } from 'cypress/support/scenarios/glue/checkout'
+import { CheckoutScenario } from 'cypress/support/scenarios/glue/checkout'
 
 const login = new BackofficeLoginPage()
 const orders = new OrderListPage()
 const order = new OrderDetailsPage()
-const orderDetailsPageScenario = new OrderDetailsPageScenario()
+const checkoutScenario = new CheckoutScenario()
 
 let orderReference: string
 
 context('Order management', () => {
   before(function () {
     // placing an order for processing
-    orderDetailsPageScenario
+    checkoutScenario
       .checkout(
         customerCredentials.email,
         customerCredentials.password,
