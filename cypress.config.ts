@@ -9,7 +9,6 @@ export default defineConfig({
   chromeWebSecurity: false,
   video: false,
   downloadsFolder: 'cypress/data/downloads',
-  fileServerFolder: 'cypress/e2e',
   fixturesFolder: 'cypress/fixtures',
   screenshotsFolder: 'cypress/data/screenshots',
   videosFolder: 'cypress/data/videos',
