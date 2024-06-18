@@ -61,7 +61,7 @@ export default defineConfig({
       }
 
       //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-      // ENVIRONMENT VARIABLES (default)
+      // ENVIRONMENT VARIABLES (local)
       //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       const envPath = process.cwd() + '/.env'
       if (fs.existsSync(envPath)) {
@@ -81,27 +81,6 @@ export default defineConfig({
 
       //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       // ENVIRONMENT VARIABLES (for environment e.g. staging)
-      //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-      const envFileNameForEnvironment = process.cwd() + `/.${environment}`
-      if (fs.existsSync(envFileNameForEnvironment)) {
-        const envVarsForEnvironment = dotenvConfig({
-          path: envFileNameForEnvironment,
-        })
-
-        if (envVarsForEnvironment.error) {
-          throw envVarsForEnvironment.error
-        }
-
-        // Iterate over each var and pass it to config.env use the key as key and the value as value
-        for (const key in envVarsForEnvironment.parsed) {
-          if (!(key in config.env)) {
-            config.env[key] = envVarsForEnvironment.parsed[key]
-          }
-        }
-      }
-
-      //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-      // ENVIRONMENT SETUP
       //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       // Define the environment file to use
       const envFileName = process.cwd() + `/.envs/.env.${environment}`
