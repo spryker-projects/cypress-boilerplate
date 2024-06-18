@@ -6,7 +6,6 @@ export default defineConfig({
   watchForFileChanges: false,
   screenshotOnRunFailure: true,
   trashAssetsBeforeRuns: true,
-  projectId: 'yvdmdz',
   chromeWebSecurity: false,
   video: false,
   downloadsFolder: 'cypress/data/downloads',
