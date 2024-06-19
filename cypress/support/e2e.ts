@@ -22,8 +22,8 @@ import './cy-commands/glue/carts-commands'
 import 'cypress-plugin-api'
 import 'cypress-mochawesome-reporter/register'
 
+// ***********************************************************
 // Example global intercept to prevent logging requests containing 'Google' or 'YouTube'
-
 // beforeEach(() => {
 //   cy.intercept(
 //     {
@@ -34,3 +34,4 @@ import 'cypress-mochawesome-reporter/register'
 //     }
 //   )
 // })
+// ***********************************************************
