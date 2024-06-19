@@ -23,6 +23,20 @@ const checkoutPayment = new StorefrontCheckoutPaymentPage()
 const checkoutSummary = new StorefrontCheckoutSummaryPage()
 const checkoutSuccess = new StorefrontCheckoutSuccessPage()
 
+before(() => {
+  // reset customer addresses
+  cy.checkAndDeleteAllCustomerAddresses(
+    customerCredentials.email,
+    customerCredentials.password,
+    customerCredentials.reference
+  )
+  // reset customer carts
+  cy.deleteAllShoppingCarts(
+    customerCredentials.email,
+    customerCredentials.password
+  )
+})
+
 context('Customer checkout', () => {
   it('can place order on storefront', () => {
     // here we use method from login page object to open login page, enter credentials and login

@@ -15,17 +15,16 @@ const itemsEndpoint = new CartsItems()
 const checkoutEndpoint = new Checkout()
 
 before(() => {
-  cy.deleteAllShoppingCarts(
-    customerCredentials.email,
-    customerCredentials.password
-  )
-})
-
-after(() => {
+  // reset customer addresses
   cy.checkAndDeleteAllCustomerAddresses(
     customerCredentials.email,
     customerCredentials.password,
     customerCredentials.reference
+  )
+  // reset customer carts
+  cy.deleteAllShoppingCarts(
+    customerCredentials.email,
+    customerCredentials.password
   )
 })
 
