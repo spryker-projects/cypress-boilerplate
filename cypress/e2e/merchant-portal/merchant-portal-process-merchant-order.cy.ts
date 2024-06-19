@@ -14,6 +14,12 @@ let orderReference: string
 
 context('Merchant Order management', () => {
   before(function () {
+    // reset customer addresses
+    cy.checkAndDeleteAllCustomerAddresses(
+      customerCredentials.email,
+      customerCredentials.password,
+      customerCredentials.reference
+    )
     // placing an order for processing
     cy.placeOrderViaGlue(
       customerCredentials.email,
@@ -27,14 +33,6 @@ context('Merchant Order management', () => {
     ).then((response: string) => {
       orderReference = response
     })
-  })
-
-  after(() => {
-    cy.checkAndDeleteAllCustomerAddresses(
-      customerCredentials.email,
-      customerCredentials.password,
-      customerCredentials.reference
-    )
   })
 
   it('merchant can process orders', () => {
