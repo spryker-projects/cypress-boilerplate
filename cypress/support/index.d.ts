@@ -1,3 +1,5 @@
+declare module 'cypress-mochawesome-reporter/register'
+
 declare namespace Cypress {
   interface Chainable {
     /**
