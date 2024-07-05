@@ -1,0 +1,7 @@
+{
+  "name": "spryker-projects/cypress-boilerplate",
+  "description": "Cypress boilerplate E2E tests",
+  "type": "library",
+  "license": "MIT",
+  "require": {}
+}

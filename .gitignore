@@ -12,9 +12,6 @@
 **/node_modules/*
 **/reports/*
 
-# Pachage lock
-package-lock.json
-
 # Local files
 .env
 .DS_store
