@@ -1,0 +1,9 @@
+version: '3.7'
+
+services:
+  cypress:
+    build: .
+    container_name: cypress
+    volumes:
+      - .:/e2e
+    entrypoint: tail -f /dev/null
