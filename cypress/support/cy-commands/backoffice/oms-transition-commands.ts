@@ -87,6 +87,7 @@ Cypress.Commands.add(
         } else {
           // Status not found, reload and try again
           return cy.reload().then(() => {
+            // eslint-disable-next-line cypress/no-unnecessary-waiting
             cy.wait(10000)
             return findStatusWithText(desiredStatus, retries + 1)
           })
