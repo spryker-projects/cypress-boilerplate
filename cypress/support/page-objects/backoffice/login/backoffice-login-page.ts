@@ -13,12 +13,13 @@ export class BackofficeLoginPage extends AbstractPage {
     return cy.get(loginForm).find('#auth_password')
   }
 
-  login = (email: string, password: string): void => {
+  login = (email: string, password: string): Cypress.Chainable => {
     this.visit()
     this.getEmailField().clear()
     this.getEmailField().type(email)
     this.getPasswordField().clear()
     this.getPasswordField().type(password)
-    cy.get(loginForm).submit()
+
+    return cy.get(loginForm).submit()
   }
 }

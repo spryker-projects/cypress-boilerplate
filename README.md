@@ -65,6 +65,12 @@ Run all tests in a headless mode vs `local` environment without using Cypress UI
 npm run cy:run
 ```
 
+Run all tests from `docker/sdk` in a headless mode vs `local` environment without using Cypress UI
+
+```bash
+docker/sdk exec cypress npm run cy:run:docker
+```
+
 Run code formatting checks
 
 ```bash

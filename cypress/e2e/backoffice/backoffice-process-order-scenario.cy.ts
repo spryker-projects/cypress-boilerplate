@@ -5,40 +5,48 @@ import userCredentials from '../../fixtures/user-data.json'
 import { BackofficeLoginPage } from '../../support/page-objects/backoffice/login/backoffice-login-page'
 import { BackofficeOrderListPage } from '../../support/page-objects/backoffice/order-management/backoffice-order-list-page'
 import { BackofficeOrderDetailsPage } from '../../support/page-objects/backoffice/order-management/backoffice-order-details-page'
+import { GlueCheckoutScenarios } from 'cypress/support/scenarios/glue/glue-checkout-scenarios'
+import { OmsTransitionScenarios } from '../../support/scenarios/backoffice/oms-transition-scenarios'
+import { GlueAddressesScenarios } from '../../support/scenarios/glue/glue-addresses-scenarios'
 
 const backofficeLoginPage = new BackofficeLoginPage()
 const backofficeOrderListPage = new BackofficeOrderListPage()
 const backofficeOrderDetailsPage = new BackofficeOrderDetailsPage()
+const glueCheckoutScenarios = new GlueCheckoutScenarios()
+const glueAddressesScenarios = new GlueAddressesScenarios()
+const omsTransitionScenarios = new OmsTransitionScenarios()
 
 let orderReference: string
 
 context('Order management', () => {
   before(function () {
     // reset customer addresses
-    cy.deleteAllCustomerAddresses(
+    glueAddressesScenarios.deleteAllCustomerAddresses(
       customerCredentials.email,
       customerCredentials.password,
       customerCredentials.reference
     )
     // placing an order for processing
-    cy.placeOrderViaGlue(
-      customerCredentials.email,
-      customerCredentials.password,
-      productData.availableOffer.concreteSku,
-      checkoutData.glueShipment.id,
-      checkoutData.gluePayment.providerName,
-      checkoutData.gluePayment.methodName,
-      productData.availableOffer.offer,
-      productData.availableOffer.merchantReference
-    ).then((response: string) => {
-      orderReference = response
-    })
+    glueCheckoutScenarios
+      .placeOrder(
+        customerCredentials.email,
+        customerCredentials.password,
+        productData.availableOffer.concreteSku,
+        checkoutData.glueShipment.id,
+        checkoutData.gluePayment.providerName,
+        checkoutData.gluePayment.methodName,
+        productData.availableOffer.offer,
+        productData.availableOffer.merchantReference
+      )
+      .then((response: string) => {
+        orderReference = response
+      })
   })
 
   it('can trigger OMS events for an order', () => {
     // if the tests are run on an env without active scheduler, we will need to trigger oms transition using CLI commands
     // make sure the location from which you run cypress tests has access to Spryker env
-    cy.triggerOmsTransition()
+    omsTransitionScenarios.triggerOmsTransition()
     backofficeLoginPage.login(
       userCredentials.backofficeUser.email,
       userCredentials.backofficeUser.password

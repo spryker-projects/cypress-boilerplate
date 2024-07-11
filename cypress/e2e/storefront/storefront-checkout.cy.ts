@@ -11,27 +11,33 @@ import { StorefrontCheckoutShippingPage } from '../../support/page-objects/store
 import { StorefrontCheckoutPaymentPage } from '../../support/page-objects/storefront/checkout/storefront-checkout-payment-page'
 import { StorefrontCheckoutSummaryPage } from '../../support/page-objects/storefront/checkout/storefront-checkout-summary-page'
 import { StorefrontCheckoutSuccessPage } from '../../support/page-objects/storefront/checkout/storefront-checkout-success-page'
+import { GlueAddressesScenarios } from '../../support/scenarios/glue/glue-addresses-scenarios'
+import { GlueCartsScenarios } from '../../support/scenarios/glue/glue-carts-scenarios'
+import { StorefrontCartScenarios } from '../../support/scenarios/storefront/storefront-cart-scenarios'
 
-const login = new StorefrontLoginPage()
+const storefrontLoginPage = new StorefrontLoginPage()
 const search = new StorefrontSearchResultsPage()
-const product = new StorefrontProductDetailsPage()
-const cart = new StorefrontCartPage()
+const productDetailsPage = new StorefrontProductDetailsPage()
+const cartPage = new StorefrontCartPage()
 const cartIcon = new StorefrontCartFlyout()
 const checkoutAddress = new StorefrontCheckoutAddressPage()
 const checkoutShipping = new StorefrontCheckoutShippingPage()
 const checkoutPayment = new StorefrontCheckoutPaymentPage()
 const checkoutSummary = new StorefrontCheckoutSummaryPage()
 const checkoutSuccess = new StorefrontCheckoutSuccessPage()
+const glueAddressesScenarios = new GlueAddressesScenarios()
+const glueCartsScenarios = new GlueCartsScenarios()
+const storefrontCartScenarios = new StorefrontCartScenarios()
 
 before(() => {
   // reset customer addresses
-  cy.checkAndDeleteAllCustomerAddresses(
+  glueAddressesScenarios.deleteAllCustomerAddresses(
     customerCredentials.email,
     customerCredentials.password,
     customerCredentials.reference
   )
   // reset customer carts
-  cy.deleteAllShoppingCarts(
+  glueCartsScenarios.deleteAllShoppingCarts(
     customerCredentials.email,
     customerCredentials.password
   )
@@ -40,22 +46,25 @@ before(() => {
 context('Customer checkout', () => {
   it('can place order on storefront', () => {
     // here we use method from login page object to open login page, enter credentials and login
-    login.login(customerCredentials.email, customerCredentials.password)
-    cy.createNewCart()
+    storefrontLoginPage.login(
+      customerCredentials.email,
+      customerCredentials.password
+    )
+    storefrontCartScenarios.createNewCart()
     // here we use search page object to find a product and go to its PDP
     search.findProduct(productData.availableProduct.abstractSku)
     // here we check that the correct product PDP was opened - this is an assertion, other assertions can be added as needed
-    product
+    productDetailsPage
       .getProductName()
       .should('contain', productData.availableProduct.name)
-    product.addProductToCart()
+    productDetailsPage.addProductToCart()
     cartIcon.getCartFlyoutIcon().click()
     // another assertion checking that price in cart is as expected
-    cart
+    cartPage
       .getCartItem(productData.availableProduct.concreteSku)
       .find('[itemprop="price"]')
       .should('contain', productData.availableProduct.price)
-    cart.getCheckoutButton().click()
+    cartPage.getCheckoutButton().click()
     checkoutAddress.provideExistingAddress()
     checkoutShipping.provideShipment(checkoutData.storefrontShipment.name)
     checkoutPayment.providePayment(checkoutData.storefrontPayment.name)

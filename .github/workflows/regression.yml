@@ -43,7 +43,6 @@ jobs:
 
       - name: Run Tests
         id: run_tests
-        continue-on-error: true
         run: |
           npm run cy:run
 
