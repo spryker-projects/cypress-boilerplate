@@ -5,10 +5,10 @@ const omsTriggerForm = 'form[name="oms_trigger_form"]'
 export class BackofficeOrderDetailsPage extends AbstractPage {
   protected PAGE_URL = ''
 
-  openOrderDetails = (orderId: number): void => {
+  openOrderDetails = (orderId: number): Cypress.Chainable => {
     this.PAGE_URL =
       Cypress.env('BACK_OFFICE_URL') + '/sales/detail?id-sales-order=' + orderId
-    cy.visit(this.PAGE_URL)
+    return cy.visit(this.PAGE_URL)
   }
 
   private getOrderOverview = (): Cypress.Chainable => {

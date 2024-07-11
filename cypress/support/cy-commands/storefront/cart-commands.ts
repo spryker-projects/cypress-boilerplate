@@ -1,10 +1,13 @@
 import { StorefrontCreateCartPage } from '../../page-objects/storefront/cart/storefront-create-cart-page'
-const cart = new StorefrontCreateCartPage()
+const storefrontCreateCartPage = new StorefrontCreateCartPage()
 
 //creates a new cart with name matching datetime of creation
-Cypress.Commands.add('createNewCart', () => {
+Cypress.Commands.add('createNewCart', (): Cypress.Chainable => {
   const currentDateTime = new Date()
-  cart.visit()
-  cart.getCartNameField().type(currentDateTime.toISOString())
-  cart.createCart()
+  storefrontCreateCartPage.visit()
+  storefrontCreateCartPage
+    .getCartNameField()
+    .type(currentDateTime.toISOString())
+
+  return storefrontCreateCartPage.createCart()
 })

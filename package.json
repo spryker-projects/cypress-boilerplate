@@ -19,6 +19,7 @@
   "scripts": {
     "cy:open": "npx cypress open",
     "cy:run": "npx cypress run",
+    "cy:run:docker": "npx cypress run --env docker=true",
     "lint:check": "eslint . ",
     "prettier:check": "prettier . --check",
     "code:check": "eslint . ; prettier . --check",

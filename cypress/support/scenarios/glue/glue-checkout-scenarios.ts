@@ -8,9 +8,26 @@ const cartEndpoint = new Carts()
 const itemsEndpoint = new CartsItems()
 const checkoutEndpoint = new Checkout()
 
-Cypress.Commands.add(
-  'placeOrderViaGlue',
-  (
+export class GlueCheckoutScenarios {
+  /**
+   * Places an order via the Glue API.
+   *
+   * @example
+   * const glueCheckoutScenarios = new GlueCheckoutScenarios()
+   * glueCheckoutScenarios.placeOrder(
+   *   'sonia@spryker.com',
+   *   'change123',
+   *   '464012',
+   *   1,
+   *   'Dummy Payment',
+   *   'Invoice',
+   *   'offer123',
+   *   'MER0001'
+   * ).then((orderReference) => {
+   *   cy.log('Order placed with reference: ' + orderReference)
+   * })
+   */
+  placeOrder = (
     email: string,
     password: string,
     sku: string,
@@ -59,4 +76,4 @@ Cypress.Commands.add(
         })
     })
   }
-)
+}

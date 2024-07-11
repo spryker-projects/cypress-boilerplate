@@ -35,3 +35,11 @@ import 'cypress-mochawesome-reporter/register'
 //   )
 // })
 // ***********************************************************
+
+export const isDocker = (): boolean => {
+  return Cypress.env('docker')
+}
+
+export const isLocal = (): boolean => {
+  return Cypress.env('environment').endsWith('local')
+}

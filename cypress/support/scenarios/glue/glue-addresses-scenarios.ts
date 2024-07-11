@@ -2,9 +2,18 @@ import { AccessTokens } from '../../glue-endpoints/authentication/access-tokens'
 
 const tokenEndpoint = new AccessTokens()
 
-Cypress.Commands.add(
-  'deleteAllCustomerAddresses',
-  (
+export class GlueAddressesScenarios {
+  /**
+   * Deletes all customer addresses via the Glue API.
+   *
+   * @example
+   * const glueAddressesScenarios = new GlueAddressesScenarios()
+   * glueAddressesScenarios.deleteAllCustomerAddresses('sonia@spryker.com', 'change123', 'DE-21')
+   *   .then(() => {
+   *     cy.log('All customer addresses deleted.');
+   *   });
+   */
+  deleteAllCustomerAddresses = (
     email: string,
     password: string,
     customerReference: string
@@ -70,4 +79,4 @@ Cypress.Commands.add(
         })
     })
   }
-)
+}

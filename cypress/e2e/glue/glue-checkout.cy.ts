@@ -8,21 +8,25 @@ import { CartsItems } from '../../support/glue-endpoints/cart/carts-items'
 import { Checkout } from '../../support/glue-endpoints/checkout/checkout'
 import { validateSchema } from '../../support/api-helper/api-helper'
 import accessTokenSchema from '../../support/glue-endpoints/authentication/access-tokens-response'
+import { GlueAddressesScenarios } from '../../support/scenarios/glue/glue-addresses-scenarios'
+import { GlueCartsScenarios } from '../../support/scenarios/glue/glue-carts-scenarios'
 
 const tokenEndpoint = new AccessTokens()
 const cartEndpoint = new Carts()
 const itemsEndpoint = new CartsItems()
 const checkoutEndpoint = new Checkout()
+const glueAddressesScenarios = new GlueAddressesScenarios()
+const glueCartsScenarios = new GlueCartsScenarios()
 
 before(() => {
   // reset customer addresses
-  cy.checkAndDeleteAllCustomerAddresses(
+  glueAddressesScenarios.deleteAllCustomerAddresses(
     customerCredentials.email,
     customerCredentials.password,
     customerCredentials.reference
   )
   // reset customer carts
-  cy.deleteAllShoppingCarts(
+  glueCartsScenarios.deleteAllShoppingCarts(
     customerCredentials.email,
     customerCredentials.password
   )
