@@ -18,6 +18,10 @@ It also illustrates the following testing patterns and capabilities as:
 - Running tests on different environments
 - Generating HTML report
 
+### Additional Resources
+
+#### For detailed guides and how-to articles, please refer to the [Wiki](https://github.com/spryker-projects/cypress-boilerplate/wiki) section
+
 ## Setup
 
 To get started with these tests, follow these setup steps:
@@ -65,7 +69,7 @@ Run all tests in a headless mode vs `local` environment without using Cypress UI
 npm run cy:run
 ```
 
-Run all tests from `docker/sdk` in a headless mode vs `local` environment without using Cypress UI
+Run all tests within `docker/sdk` in a headless mode vs `local` environment without using Cypress UI
 
 ```bash
 docker/sdk exec cypress npm run cy:run:docker

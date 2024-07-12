@@ -8,45 +8,74 @@ const backofficeLoginPage = new BackofficeLoginPage()
 const backofficeOrderListPage = new BackofficeOrderListPage()
 const backofficeOrderDetailsPage = new BackofficeOrderDetailsPage()
 
-Cypress.Commands.add('triggerOmsTransition', (path = ''): Cypress.Chainable => {
-  if (isLocal() || isDocker()) {
-    if (isDocker()) {
-      // Execute curl commands for Docker environment
-      const dockerCliUrl = Cypress.env('DOCKER_CLI_URL')
-      const checkConditionCommand = `curl --request POST -LsS --data "APPLICATION_STORE='DE' COMMAND='console oms:check-condition' cli.sh" --max-time 1000 --url "${dockerCliUrl}/console"`
-      const checkTimeoutCommand = `curl --request POST -LsS --data "APPLICATION_STORE='DE' COMMAND='console oms:check-timeout' cli.sh" --max-time 1000 --url "${dockerCliUrl}/console"`
+Cypress.Commands.add(
+  'triggerOmsTransition',
+  (path = Cypress.env('PROJECT_LOCATION')): Cypress.Chainable => {
+    if (isLocal() || isDocker()) {
+      if (isDocker()) {
+        // Execute curl commands for Docker environment
+        const dockerCliUrl = Cypress.env('DOCKER_CLI_URL')
+        const checkConditionRequest = {
+          method: 'POST',
+          url: `${dockerCliUrl}/console`,
+          body: "APPLICATION_STORE='DE' COMMAND='console oms:check-condition' cli.sh",
+        }
+        const checkTimeoutRequest = {
+          method: 'POST',
+          url: `${dockerCliUrl}/console`,
+          body: "APPLICATION_STORE='DE' COMMAND='console oms:check-timeout' cli.sh",
+        }
 
-      return cy
-        .exec(checkConditionCommand, { failOnNonZeroExit: false })
-        .its('code')
-        .should('eq', 0)
-        .then(() => cy.exec(checkTimeoutCommand, { failOnNonZeroExit: false }))
-        .its('code')
-        .should('eq', 0)
-    } else {
-      // keep in mind that by default exec() command runs commands in the root Cypress tests directly
-      // please provide the correct path to your Spryker env
-      // and change the validation logic, as default is set not fail on non-zero exit
-      const baseCommand = path ? `cd ${path} && docker/sdk` : 'docker/sdk'
+        return cy
+          .api(checkConditionRequest)
+          .then((response) => {
+            expect(
+              response.status,
+              `Request "${JSON.stringify(checkConditionRequest)}" failed with status ${response.status}. Response: ${response.body}`
+            ).to.eq(200)
+          })
+          .then(() => {
+            return cy.api(checkTimeoutRequest).then((response) => {
+              expect(
+                response.status,
+                `Request "${JSON.stringify(checkTimeoutRequest)}" failed with status ${response.status}. Response: ${response.body}`
+              ).to.eq(200)
+            })
+          })
+      } else {
+        // keep in mind that by default exec() command runs commands in the root Cypress tests directly
+        // please provide the correct path to your Spryker env in 'PROJECT_LOCATION' env variable
+        // and change the validation logic, as default is set not fail on non-zero exit
+        const baseCommand = path ? `cd ${path} && docker/sdk` : 'docker/sdk'
 
-      return cy
-        .exec(`${baseCommand} console oms:check-condition`, {
-          failOnNonZeroExit: false,
-        })
-        .its('code')
-        .should('not.eq', 0)
-        .then(() =>
-          cy.exec(`${baseCommand} console oms:check-timeout`, {
+        return cy
+          .exec(`${baseCommand} console oms:check-condition`, {
             failOnNonZeroExit: false,
           })
-        )
-        .its('code')
-        .should('not.eq', 0)
+          .then((result) => {
+            expect(
+              result.code,
+              `Command "${baseCommand} console oms:check-condition" failed with code ${result.code}. Output: ${result.stdout}. Error: ${result.stderr}`
+            ).to.not.eq(0)
+          })
+          .then(() => {
+            return cy
+              .exec(`${baseCommand} console oms:check-timeout`, {
+                failOnNonZeroExit: false,
+              })
+              .then((result) => {
+                expect(
+                  result.code,
+                  `Command "${baseCommand} console oms:check-timeout" failed with code ${result.code}. Output: ${result.stdout}. Error: ${result.stderr}`
+                ).to.not.eq(0)
+              })
+          })
+      }
+    } else {
+      return cy.wrap(null)
     }
-  } else {
-    return cy.wrap(null)
   }
-})
+)
 
 Cypress.Commands.add(
   'triggerOmsEvent',
