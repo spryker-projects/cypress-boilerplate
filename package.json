@@ -1,6 +1,8 @@
 {
   "name": "cypress-boilerplate",
+  "description": "Examples of end-to-end tests for Spryker Marketplace B2B demoshop",
   "version": "1.0.0",
+  "license": "MIT",
   "private": true,
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^7.8.0",
