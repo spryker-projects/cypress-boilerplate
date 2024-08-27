@@ -1,39 +1,56 @@
 ## Description
 
-This is a boilerplate for Cypress tests, designed to be compatible with Spryker Marketplace B2B.
-It should be used as the starting point for creating project-specific tests for your Spryker solution.
-It includes examples of:
+This repository provides a Cypress boilerplate to help you quickly set up and run end-to-end (E2E) tests for Spryker projects, including but not limited to Marketplace B2B. It offers a solid foundation for creating custom test suites, ensuring scalability and maintainability. While this boilerplate doesn't include pre-built tests for all scenarios, it equips you with the tools and structure needed to implement Cypress E2E tests in your own project, regardless of the business model.
+### Key Features
 
-- Yves tests - checkout process
-- Backoffice tests - order management process
-- Merchant Portal tests - order management process
-- Glue API tests - checkout process with response schema validation
+- **Comprehensive Test Coverage:**
+  - **Yves:** Example tests for the checkout process.
+  - **Backoffice:** Example tests for order management.
+  - **Merchant Portal:** Example tests for order management.
+  - **Glue API:** Example tests for the checkout process including response schema validation, ensuring that API responses adhere to the expected format.
 
-It also illustrates the following testing patterns and capabilities as:
+- **Page Objects:** 
+  - Utilizes the Page Object pattern to promote code reuse and simplify test maintenance.
 
-- Page Objects
-- Cypress custom commands
-- Using CLI commands from within cypress
-- Using static fixtures
-- Running tests on different environments
-- Generating HTML report
+- **Custom Commands and Scenarios:**
+  - Includes Cypress custom commands and scenarios to streamline repetitive actions in tests.
 
-### Additional Resources
+- **CLI Commands from Within Cypress:**
+  - Execute CLI commands directly from within Cypress tests for enhanced control and flexibility.
+ 
+- **Static Fixtures:** 
+  - Uses static fixtures to manage test data effectively, ensuring consistency and reliability in test execution.
 
-#### For detailed guides and how-to articles, please refer to the [Wiki](https://github.com/spryker-projects/cypress-boilerplate/wiki) section
+- **Environment Configurations:**
+  - Supports running tests across multiple environments (local, staging, production) with minimal configuration changes.
 
-## Setup
+- **Docker Integration:**
+  - Seamlessly integrates with Docker using Spryker `docker/sdk`, allowing tests to be executed within a containerized environment.
 
-To get started with these tests, follow these setup steps:
+- **Continuous Integration (CI):**
+  - Easily integrates with CI pipelines for automated test execution, including detailed reporting.
 
-1. **Install Dependencies:**
+- **Naming Conventions:**
+  - Adopts standardized naming conventions for test files, Page Objects, and other assets to maintain consistency across the project.
 
-- Install all necessary dependencies required for running the tests.
-  ```bash
-  npm install
+- **Code Quality Tools:**
+  - Includes ESLint and Prettier for maintaining code quality and consistency across the test suite.
+
+- **Reporting:**
+  - Automated HTML reports generated post-test execution to keep track of test results.
+
+## Getting Started
+
+To get started with this Cypress boilerplate, follow these steps:
+
+### 1. Install Dependencies
+
+Install all necessary dependencies required for running the tests.
+
+```bash
+npm install
   ```
-
-2. **Environment Configuration:**
+### 2. Environment Configuration:
 
 - The available environments on which you want to run tests are listed in `.envs` directory.
 - For each environment there should be a separate file with name `.env.<env_name>`, f.e. `.env.staging`
@@ -41,7 +58,7 @@ To get started with these tests, follow these setup steps:
 - Inside the file there should be URLs for Yves, Backoffice and GLUE
 - If you need other sensitive env-dependent variables, you can create `.env` file where you can add these variables and which can be excluded from source control
 
-## Running Tests
+### 3. Running Tests
 
 To open the Cypress tests in Cypress UI - Cypress test runner, use the following command and supply the name of the environment.
 If environment is not provided at launch, by default `local` environment will be used, so this example if for opening tests against `local` environment:
@@ -75,6 +92,8 @@ Run all tests within `docker/sdk` in a headless mode vs `local` environment with
 docker/sdk exec cypress npm run cy:run:docker
 ```
 
+### 4. Code Quality Checks
+
 Run code formatting checks
 
 ```bash
@@ -87,6 +106,10 @@ Fix code formatting
 npm run code:fix
 ```
 
-## Report
+### 5. Test Reports
 
 After test execution, an HTML report will be automatically generated and available under `cypress/data/reports`
+
+## Additional Resources
+
+For detailed guides, best practices, and how-to articles, please refer to our [Wiki](https://github.com/spryker-projects/cypress-boilerplate/wiki).
