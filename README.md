@@ -65,21 +65,21 @@ npm install
 ### 2. Environment Configuration:
 
 - The available environments on which you want to run tests are listed in `.envs` directory.
-- For each environment there should be a separate file with name `.env.<env_name>`, f.e. `.env.staging`
-- If you need to add a new environment, you should add new file in `.envs` folder and also add your environment name to `cypress.config.ts` - `environments` variable
-- Inside the file there should be URLs for Yves, Backoffice and GLUE
-- If you need other sensitive env-dependent variables, you can create `.env` file where you can add these variables and which can be excluded from source control
+- For each environment, there should be a separate file with the name `.env.<env_name>`, f.e. `.env.staging`
+- If you need to add a new environment, you should add a new file in `.envs` folder and also add your environment name to `cypress.config.ts` - `environments` variable
+- Inside the file, there should be URLs for your Yves, Backoffice, and Glue
+- If you need other sensitive env-dependent variables, you can create `.env` file where you can add these variables which can be excluded from the source control
 
 ### 3. Running Tests
 
-To open the Cypress tests in Cypress UI - Cypress test runner, use the following command and supply the name of the environment.
-If environment is not provided at launch, by default `local` environment will be used, so this example if for opening tests against `local` environment:
+To open the Cypress tests in Cypress UI - [Cypress App](https://docs.cypress.io/guides/core-concepts/cypress-app), use the following command and supply the name of the environment.
+If the environment is not provided at launch, by default `local` environment will be used, so this example is for opening tests against `local` environment:
 
 ```bash
 npx cypress open
 ```
 
-And this is and example of opening tests against `staging` environment:
+And this is an example of opening tests against `staging` environment:
 
 ```bash
 npx cypress open --env environment=staging
