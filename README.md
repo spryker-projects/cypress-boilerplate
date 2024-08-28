@@ -1,6 +1,6 @@
 ## Description
 
-This repository offers a boilerplate to help you quickly integrate Cypress E2E testing framework into your Spryker projects, including support for Marketplace B2B and other business models. While it doesn't provide a full set of automated tests out of the box, it lays a strong foundation for building your own test suites. A detailed [Wiki](https://github.com/spryker-projects/cypress-boilerplate/wiki) section is also available, offering guides and best practices to help you maximize the boilerplate’s potential.
+This repository provides a comprehensive boilerplate designed to help developers and QA engineers quickly integrate the Cypress E2E testing framework into their Spryker projects, including support for Marketplace B2B and other business models. While it doesn't come with a full set of automated tests out of the box, it offers a strong foundation for building custom test suites. The repository also includes detailed guides, best practices, and real examples in the [Wiki](https://github.com/spryker-projects/cypress-boilerplate/wiki) section to help you optimize and streamline your Cypress implementation for end-to-end testing.
 
 ### Key Features
 
