@@ -31,7 +31,7 @@ jobs:
       - name: Install packages
         run: |
             sudo apt install awscli -q
-          
+
       - name: Install Cypress
         run: npm install
 
