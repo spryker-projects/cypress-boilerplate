@@ -37,7 +37,7 @@ context('Order management', () => {
 
   it('can trigger OMS events for an order', () => {
     // if the tests are run on an env without active scheduler, we will need to trigger oms transition using CLI commands
-    // make sure the location from which you run cypress tests has access to Spryker env
+    // make sure the location from which you run cypress tests has access to Spryker environment
     cy.triggerOmsTransition()
     backofficeLoginPage.login(
       userCredentials.backofficeUser.email,
