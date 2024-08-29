@@ -15,6 +15,7 @@ export class MerchantLoginPage extends AbstractPage {
   }
 
   login = (email: string, password: string): void => {
+    cy.clearAllCookies()
     this.visit()
     this.getEmailField().clear()
     this.getEmailField().type(email)

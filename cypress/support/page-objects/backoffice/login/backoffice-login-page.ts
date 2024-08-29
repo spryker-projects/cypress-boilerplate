@@ -14,6 +14,7 @@ export class BackofficeLoginPage extends AbstractPage {
   }
 
   login = (email: string, password: string): Cypress.Chainable => {
+    cy.clearAllCookies()
     this.visit()
     this.getEmailField().clear()
     this.getEmailField().type(email)
