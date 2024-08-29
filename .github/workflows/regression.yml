@@ -2,7 +2,7 @@ name: 'Run tests vs B2B-MP demoshop'
 
 on:
   pull_request:
-    types: [labeled, synchronize]
+    types: [ labeled, synchronize ]
   workflow_dispatch:
 
 concurrency:
@@ -28,6 +28,10 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Install packages
+        run: |
+            sudo apt install awscli -q
+          
       - name: Install Cypress
         run: npm install
 
