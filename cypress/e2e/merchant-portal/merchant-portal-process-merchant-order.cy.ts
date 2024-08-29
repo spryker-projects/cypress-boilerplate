@@ -51,6 +51,9 @@ context('Merchant Order management', () => {
   })
 
   it('merchant can process orders', () => {
+    // if the tests are run on an env without active scheduler, we will need to trigger oms transition using CLI commands
+    // make sure the location from which you run cypress tests has access to Spryker env
+    omsTransitionScenarios.triggerOmsTransition()
     omsTransitionScenarios.triggerOmsEvent(orderReference, 'Pay')
     // if the tests are run on an env without active scheduler, e.g. local env, we will need to trigger oms transition using CLI commands
     // make sure the location from which you run cypress tests has access to Spryker env

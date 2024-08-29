@@ -43,3 +43,7 @@ export const isDocker = (): boolean => {
 export const isLocal = (): boolean => {
   return Cypress.env('environment').endsWith('local')
 }
+
+export const isCI = (): boolean => {
+  return Cypress.env('environment').endsWith('ci')
+}

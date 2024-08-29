@@ -2,7 +2,7 @@ import userCredentials from '../../../fixtures/user-data.json'
 import { BackofficeLoginPage } from '../../page-objects/backoffice/login/backoffice-login-page'
 import { BackofficeOrderListPage } from '../../page-objects/backoffice/order-management/backoffice-order-list-page'
 import { BackofficeOrderDetailsPage } from '../../page-objects/backoffice/order-management/backoffice-order-details-page'
-import { isDocker, isLocal } from '../../e2e'
+import { isCI, isDocker, isLocal } from '../../e2e'
 
 const backofficeLoginPage = new BackofficeLoginPage()
 const backofficeOrderListPage = new BackofficeOrderListPage()
@@ -11,7 +11,7 @@ const backofficeOrderDetailsPage = new BackofficeOrderDetailsPage()
 Cypress.Commands.add(
   'triggerOmsTransition',
   (path = Cypress.env('PROJECT_LOCATION')): Cypress.Chainable => {
-    if (isLocal() || isDocker()) {
+    if (isLocal() || isDocker() || isCI()) {
       if (isDocker()) {
         // Execute curl commands for Docker environment
         const dockerCliUrl = Cypress.env('DOCKER_CLI_URL')
@@ -41,6 +41,31 @@ Cypress.Commands.add(
                 `Request "${JSON.stringify(checkTimeoutRequest)}" failed with status ${response.status}. Response: ${response.body}`
               ).to.eq(200)
             })
+          })
+      } else if (isCI()) {
+        const baseCommand = path ? `cd ${path} && docker/sdk` : 'docker/sdk'
+
+        return cy
+          .exec(`${baseCommand} console oms:check-condition`, {
+            failOnNonZeroExit: true,
+          })
+          .then((result) => {
+            expect(
+              result.code,
+              `Command "${baseCommand} console oms:check-condition" failed with code ${result.code}. Output: ${result.stdout}. Error: ${result.stderr}`
+            ).to.eq(0)
+          })
+          .then(() => {
+            return cy
+              .exec(`${baseCommand} console oms:check-timeout`, {
+                failOnNonZeroExit: true,
+              })
+              .then((result) => {
+                expect(
+                  result.code,
+                  `Command "${baseCommand} console oms:check-timeout" failed with code ${result.code}. Output: ${result.stdout}. Error: ${result.stderr}`
+                ).to.eq(0)
+              })
           })
       } else {
         // keep in mind that by default exec() command runs commands in the root Cypress tests directly

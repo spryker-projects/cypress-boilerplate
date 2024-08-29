@@ -62,7 +62,7 @@ context('Order management', () => {
       .getOrderSubtotal()
       .should('contain', productData.availableOffer.price)
     // clicks the oms trigger with the name 'Pay'
-    backofficeOrderDetailsPage.triggerOms('Pay')
+    omsTransitionScenarios.triggerOmsEvent(orderReference, 'Pay')
     backofficeOrderDetailsPage
       .getSuccessfulOrderMessages()
       .should('contain', 'Status change triggered successfully.')
