@@ -43,7 +43,7 @@ export default defineConfig({
       let environment = 'local'
 
       // When the environment is set, use this environment. This can be set via the command line `npx cypress run --env environment=staging`
-      // Possible options are: local, testing, staging, production
+      // Possible options are: ci, local, testing, staging, production
       const environments = ['ci', 'local', 'testing', 'staging', 'production']
 
       // Check if the environment is defined in Cypress environment configuration
