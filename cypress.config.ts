@@ -7,7 +7,7 @@ export default defineConfig({
   screenshotOnRunFailure: true,
   trashAssetsBeforeRuns: true,
   chromeWebSecurity: false,
-  video: false,
+  video: true,
   downloadsFolder: 'cypress/data/downloads',
   fixturesFolder: 'cypress/fixtures',
   screenshotsFolder: 'cypress/data/screenshots',
