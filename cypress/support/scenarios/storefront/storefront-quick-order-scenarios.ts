@@ -5,9 +5,9 @@ export class StorefrontQuickOrderScenarios {
 
   addProduct = (
     skuOrName: string,
-    quantity: number = 1,
+    quantity = 1,
     merchantName?: string,
-    rowIndex: number = 0
+    rowIndex = 0
   ): void => {
     this.quickOrderPage.searchProduct(rowIndex, skuOrName)
     this.quickOrderPage.applySuggestedProduct(skuOrName)

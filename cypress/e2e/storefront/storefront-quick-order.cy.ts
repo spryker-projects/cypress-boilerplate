@@ -29,11 +29,12 @@ context('Quick order', () => {
   it('can add product to cart', () => {
     storefrontQuickOrderScenarios.addProduct(
       quickOrderData.product.sku,
-      quickOrderData.product.quantity,
+      quickOrderData.product.quantity
     )
     storefrontQuickOrderPage.addToCart()
 
-    storefrontCartPage.getCartItemsList()
+    storefrontCartPage
+      .getCartItemsList()
       .should('contain', quickOrderData.product.sku)
   })
 
@@ -42,18 +43,19 @@ context('Quick order', () => {
 
     storefrontQuickOrderScenarios.addProduct(
       quickOrderData.product.sku,
-      quickOrderData.product.quantity,
+      quickOrderData.product.quantity
     )
     storefrontQuickOrderPage.addToCart()
 
-    storefrontCartPage.getCartItemsList()
+    storefrontCartPage
+      .getCartItemsList()
       .should('contain', quickOrderData.product.sku)
   })
 
   it('can add product for checkout', () => {
     storefrontQuickOrderScenarios.addProduct(
       quickOrderData.product.sku,
-      quickOrderData.product.quantity,
+      quickOrderData.product.quantity
     )
 
     storefrontQuickOrderPage.createOrder()

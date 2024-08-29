@@ -8,8 +8,9 @@ export class StorefrontQuickOrderPage extends AbstractPage {
   }
 
   getQuickOrderRows = (): Cypress.Chainable => {
-    return this.getQuickOrderForm()
-      .find('[data-qa="component quick-order-row"]')
+    return this.getQuickOrderForm().find(
+      '[data-qa="component quick-order-row"]'
+    )
   }
 
   getProductSearchAutocompleteFields = (): Cypress.Chainable => {
@@ -72,12 +73,10 @@ export class StorefrontQuickOrderPage extends AbstractPage {
   }
 
   addToCart = (): Cypress.Chainable => {
-    return cy.get('[name="addToCart"]')
-      .click()
+    return cy.get('[name="addToCart"]').click()
   }
 
   createOrder = (): Cypress.Chainable => {
-    return cy.get('[name="createOrder"]')
-      .click()
+    return cy.get('[name="createOrder"]').click()
   }
 }
