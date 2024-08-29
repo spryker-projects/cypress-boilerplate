@@ -26,7 +26,7 @@ context('Quick order', () => {
     storefrontQuickOrderPage.visit()
   })
 
-  it('can add product to cart', () => {
+  it('can search product by SKU and to cart', () => {
     storefrontQuickOrderScenarios.addProduct(
       quickOrderData.product.sku,
       quickOrderData.product.quantity
@@ -36,6 +36,18 @@ context('Quick order', () => {
     storefrontCartPage
       .getCartItemsList()
       .should('contain', quickOrderData.product.sku)
+  })
+
+  it('can search product by name and add to cart', () => {
+    storefrontQuickOrderScenarios.addProduct(
+      quickOrderData.product.searchName,
+      quickOrderData.product.quantity
+    )
+    storefrontQuickOrderPage.addToCart()
+
+    storefrontCartPage
+      .getCartItemsList()
+      .should('contain', quickOrderData.product.searchName)
   })
 
   it('can add filtered by merchant product to cart', () => {

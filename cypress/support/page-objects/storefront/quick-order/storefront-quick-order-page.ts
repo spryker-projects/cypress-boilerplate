@@ -31,7 +31,10 @@ export class StorefrontQuickOrderPage extends AbstractPage {
   }
 
   applySuggestedProduct = (skuOrName: string): Cypress.Chainable => {
-    return this.getSuggestedProductsList().contains(skuOrName).click()
+    return this.getSuggestedProductsList()
+      .filter(':visible')
+      .contains(skuOrName)
+      .click()
   }
 
   selectProductMerchant = (
@@ -43,6 +46,12 @@ export class StorefrontQuickOrderPage extends AbstractPage {
       .find('[data-qa="component custom-select"] select')
       .should('contain', merchant)
       .select(merchant, { force: true })
+  }
+
+  getQuantityInput = (rowIndex: number): Cypress.Chainable => {
+    return this.getQuickOrderRows()
+      .eq(rowIndex)
+      .find('#quick_order_item_embedded_form_quantity')
   }
 
   incrementQuantity = (rowIndex: number): Cypress.Chainable => {

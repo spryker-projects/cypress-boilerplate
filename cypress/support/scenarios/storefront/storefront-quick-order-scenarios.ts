@@ -21,5 +21,9 @@ export class StorefrontQuickOrderScenarios {
         this.quickOrderPage.incrementQuantity(rowIndex)
       }
     }
+
+    this.quickOrderPage
+      .getQuantityInput(rowIndex)
+      .should('have.value', quantity)
   }
 }
