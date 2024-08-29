@@ -17,6 +17,10 @@ export class StorefrontQuickOrderPage extends AbstractPage {
     return cy.get('[data-qa="component product-search-autocomplete-form"]')
   }
 
+  getSuggestedProductsList(): Cypress.Chainable {
+    return cy.get('[data-qa="component products-list"]')
+  }
+
   searchProduct = (
     fieldIndex: number,
     skuOrName: string
@@ -27,10 +31,7 @@ export class StorefrontQuickOrderPage extends AbstractPage {
   }
 
   applySuggestedProduct = (skuOrName: string): Cypress.Chainable => {
-    return cy
-      .get('[data-qa="component products-list"]')
-      .contains(skuOrName)
-      .click()
+    return this.getSuggestedProductsList().contains(skuOrName).click()
   }
 
   selectProductMerchant = (
