@@ -1,9 +1,9 @@
-import customerCredentials from '../../../fixtures/customer-data.json'
-import { StorefrontLoginPage } from '../../../support/page-objects/storefront/login/storefront-login-page'
-import { StorefrontQuickOrderPage } from '../../../support/page-objects/storefront/quick-order/storefront-quick-order-page'
-import quickOrderData from '../../../fixtures/quick-order-data.json'
-import { StorefrontCartPage } from '../../../support/page-objects/storefront/cart/storefront-cart-page'
-import { StorefrontQuickOrderScenarios } from '../../../support/scenarios/storefront/storefront-quick-order-scenarios'
+import customerCredentials from '@fixtures/customer-data.json'
+import { StorefrontLoginPage } from '@support/page-objects/storefront/login/storefront-login-page'
+import { StorefrontQuickOrderPage } from '@support/page-objects/storefront/quick-order/storefront-quick-order-page'
+import quickOrderData from '@fixtures/quick-order-data.json'
+import { StorefrontCartPage } from '@support/page-objects/storefront/cart/storefront-cart-page'
+import { StorefrontQuickOrderScenarios } from '@support/scenarios/storefront/storefront-quick-order-scenarios'
 
 const storefrontLoginPage = new StorefrontLoginPage()
 const storefrontCartPage = new StorefrontCartPage()
