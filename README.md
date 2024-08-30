@@ -126,7 +126,7 @@ After test execution, an HTML report will be automatically generated and availab
 
 For detailed guides, best practices, and how-to articles, please refer to our [Wiki](https://github.com/spryker-projects/cypress-boilerplate/wiki).
 
-❗ **If you are new to Cypress:**
+### ❗If you are new to Cypress:
 
 - Start with [Introduction to Cypress](https://docs.cypress.io/guides/core-concepts/introduction-to-cypress) and go through the **Core Concepts** section.
 - Understand [Testing Types](https://docs.cypress.io/guides/core-concepts/testing-types).
