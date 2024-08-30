@@ -128,8 +128,7 @@ For detailed guides, best practices, and how-to articles, please refer to our [W
 
 ❗ **If you are new to Cypress:**
 
-* Start with [Introduction to Cypress](https://docs.cypress.io/guides/core-concepts/introduction-to-cypress) and go through the **Core Concepts** section.
-* Understand [Testing Types](https://docs.cypress.io/guides/core-concepts/testing-types).
-* Get familiar with [Best Practices](https://docs.cypress.io/guides/references/best-practices) for working with Cypress.
-* Explore learning resources at [Cypress Learning Center](https://learn.cypress.io/).
-
+- Start with [Introduction to Cypress](https://docs.cypress.io/guides/core-concepts/introduction-to-cypress) and go through the **Core Concepts** section.
+- Understand [Testing Types](https://docs.cypress.io/guides/core-concepts/testing-types).
+- Get familiar with [Best Practices](https://docs.cypress.io/guides/references/best-practices) for working with Cypress.
+- Explore learning resources at [Cypress Learning Center](https://learn.cypress.io/).
