@@ -12,8 +12,8 @@
     "moduleResolution": "node",
     "allowJs": true,
     "paths": {
-        "@fixtures/*": ["./cypress/fixtures/*"],
-        "@support/*": ["./cypress/support/*"],
+      "@fixtures/*": ["./cypress/fixtures/*"],
+      "@support/*": ["./cypress/support/*"]
     }
   },
   "include": ["**/*.js", "**/*.ts", "fixtures/*.json"]
