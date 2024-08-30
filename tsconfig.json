@@ -10,7 +10,11 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "moduleResolution": "node",
-    "allowJs": true
+    "allowJs": true,
+    "paths": {
+        "@fixtures/*": ["./cypress/fixtures/*"],
+        "@support/*": ["./cypress/support/*"],
+    }
   },
   "include": ["**/*.js", "**/*.ts", "fixtures/*.json"]
 }
