@@ -1,15 +1,15 @@
-import customerCredentials from '../../fixtures/customer-data.json'
-import productData from '../../fixtures/product-data.json'
-import checkoutData from '../../fixtures/checkout-data.json'
+import customerCredentials from '../../../fixtures/customer-data.json'
+import productData from '../../../fixtures/product-data.json'
+import checkoutData from '../../../fixtures/checkout-data.json'
 
-import { AccessTokens } from '../../support/glue-endpoints/authentication/access-tokens'
-import { Carts } from '../../support/glue-endpoints/cart/carts'
-import { CartsItems } from '../../support/glue-endpoints/cart/carts-items'
-import { Checkout } from '../../support/glue-endpoints/checkout/checkout'
-import { validateSchema } from '../../support/api-helper/api-helper'
-import accessTokenSchema from '../../support/glue-endpoints/authentication/access-tokens-response'
-import { GlueAddressesScenarios } from '../../support/scenarios/glue/glue-addresses-scenarios'
-import { GlueCartsScenarios } from '../../support/scenarios/glue/glue-carts-scenarios'
+import { AccessTokens } from '../../../support/glue-endpoints/authentication/access-tokens'
+import { Carts } from '../../../support/glue-endpoints/cart/carts'
+import { CartsItems } from '../../../support/glue-endpoints/cart/carts-items'
+import { Checkout } from '../../../support/glue-endpoints/checkout/checkout'
+import { validateSchema } from '../../../support/api-helper/api-helper'
+import accessTokenSchema from '../../../support/glue-endpoints/authentication/access-tokens-response'
+import { GlueAddressesScenarios } from '../../../support/scenarios/glue/glue-addresses-scenarios'
+import { GlueCartsScenarios } from '../../../support/scenarios/glue/glue-carts-scenarios'
 
 const tokenEndpoint = new AccessTokens()
 const cartEndpoint = new Carts()

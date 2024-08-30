@@ -1,8 +1,8 @@
-import { validateSchema } from '../../support/api-helper/api-helper'
-import accessTokenSchema from '../../support/glue-endpoints/authentication/access-tokens-response'
-import { AccessTokens } from '../../support/glue-endpoints/authentication/access-tokens'
-import customerCredentials from '../../fixtures/customer-data.json'
-import errorResponseSchema from '../../support/api-helper/general-responses/error-response'
+import { validateSchema } from '../../../support/api-helper/api-helper'
+import accessTokenSchema from '../../../support/glue-endpoints/authentication/access-tokens-response'
+import { AccessTokens } from '../../../support/glue-endpoints/authentication/access-tokens'
+import customerCredentials from '../../../fixtures/customer-data.json'
+import errorResponseSchema from '../../../support/api-helper/general-responses/error-response'
 
 const tokenEndpoint = new AccessTokens()
 

@@ -1,13 +1,13 @@
-import customerCredentials from '../../fixtures/customer-data.json'
-import productData from '../../fixtures/product-data.json'
-import checkoutData from '../../fixtures/checkout-data.json'
-import userCredentials from '../../fixtures/user-data.json'
-import { BackofficeLoginPage } from '../../support/page-objects/backoffice/login/backoffice-login-page'
-import { BackofficeOrderListPage } from '../../support/page-objects/backoffice/order-management/backoffice-order-list-page'
-import { BackofficeOrderDetailsPage } from '../../support/page-objects/backoffice/order-management/backoffice-order-details-page'
+import customerCredentials from '../../../fixtures/customer-data.json'
+import productData from '../../../fixtures/product-data.json'
+import checkoutData from '../../../fixtures/checkout-data.json'
+import userCredentials from '../../../fixtures/user-data.json'
+import { BackofficeLoginPage } from '../../../support/page-objects/backoffice/login/backoffice-login-page'
+import { BackofficeOrderListPage } from '../../../support/page-objects/backoffice/order-management/backoffice-order-list-page'
+import { BackofficeOrderDetailsPage } from '../../../support/page-objects/backoffice/order-management/backoffice-order-details-page'
 import { GlueCheckoutScenarios } from 'cypress/support/scenarios/glue/glue-checkout-scenarios'
-import { OmsTransitionScenarios } from '../../support/scenarios/backoffice/oms-transition-scenarios'
-import { GlueAddressesScenarios } from '../../support/scenarios/glue/glue-addresses-scenarios'
+import { OmsTransitionScenarios } from '../../../support/scenarios/backoffice/oms-transition-scenarios'
+import { GlueAddressesScenarios } from '../../../support/scenarios/glue/glue-addresses-scenarios'
 
 const backofficeLoginPage = new BackofficeLoginPage()
 const backofficeOrderListPage = new BackofficeOrderListPage()
