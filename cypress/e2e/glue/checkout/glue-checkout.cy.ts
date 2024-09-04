@@ -10,6 +10,7 @@ import { validateSchema } from '@support/api-helper/api-helper'
 import accessTokenSchema from '@support/glue-endpoints/authentication/access-tokens-response'
 import { GlueAddressesScenarios } from '@support/scenarios/glue/glue-addresses-scenarios'
 import { GlueCartsScenarios } from '@support/scenarios/glue/glue-carts-scenarios'
+import checkoutSchema from '@support/glue-endpoints/checkout/checkout-response'
 
 const tokenEndpoint = new AccessTokens()
 const cartEndpoint = new Carts()
@@ -82,6 +83,7 @@ context('Customer checkout', () => {
             checkoutData.gluePayment.methodName
           )
           .then((response) => {
+            validateSchema(checkoutSchema, response)
             expect(response.isOkStatusCode).to.be.true
             expect(response.body.data.attributes.orderReference).to.be.not.null
             const orderReference = response.body.data.attributes.orderReference
