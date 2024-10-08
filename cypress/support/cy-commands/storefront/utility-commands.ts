@@ -9,3 +9,13 @@ Cypress.Commands.add('closeAllFlashMessages', (): Cypress.Chainable => {
       }
     })
 })
+
+Cypress.Commands.add(
+  'formatDisplayPrice',
+  (price: number): Cypress.Chainable => {
+    const priceInEuros = (price / 100).toFixed(2)
+    const formattedPrice = `€${parseFloat(priceInEuros).toLocaleString('en-US', { minimumFractionDigits: 2 })}`
+
+    return cy.wrap(formattedPrice)
+  }
+)
