@@ -18,7 +18,7 @@ const glueAddressesScenarios = new GlueAddressesScenarios()
 const omsTransitionScenarios = new OmsTransitionScenarios()
 const glueCartsScenarios = new GlueCartsScenarios()
 
-let orderReference: string
+let createdOrderReference: string
 
 context('Merchant Order management', () => {
   before(function () {
@@ -45,8 +45,8 @@ context('Merchant Order management', () => {
         productData.availableOffer.offer,
         productData.availableOffer.merchantReference
       )
-      .then((response: string) => {
-        orderReference = response
+      .then(({ orderReference }) => {
+        createdOrderReference = orderReference
       })
   })
 
@@ -54,7 +54,7 @@ context('Merchant Order management', () => {
     // if the tests are run on an env without active scheduler, we will need to trigger oms transition using CLI commands
     // make sure the location from which you run cypress tests has access to Spryker env
     omsTransitionScenarios.triggerOmsTransition()
-    omsTransitionScenarios.triggerOmsEvent(orderReference, 'Pay')
+    omsTransitionScenarios.triggerOmsEvent(createdOrderReference, 'Pay')
     // if the tests are run on an env without active scheduler, e.g. local env, we will need to trigger oms transition using CLI commands
     // make sure the location from which you run cypress tests has access to Spryker env
     omsTransitionScenarios.triggerOmsTransition()
@@ -68,7 +68,7 @@ context('Merchant Order management', () => {
     // verify that the order placed in before hook exists and was passed to merchant
     merchantOrderListPage
       .getOrderReference(0)
-      .should('contain.text', orderReference)
+      .should('contain.text', createdOrderReference)
     merchantOrderListPage.viewOrderByPosition(0)
     // check that price for the product is still as it was in the shop
     merchantOrderDetailsPage

@@ -4,9 +4,21 @@ import { Orders } from '@support/glue-endpoints/order/orders'
 const tokenEndpoint = new AccessTokens()
 const ordersEndpoint = new Orders()
 
-Cypress.Commands.add(
-  'getCustomerOrder',
-  (
+export class GlueOrdersScenarios {
+  /**
+   * Retrieves an order via the Glue API.
+   *
+   * @example
+   * const glueOrdersScenarios = new GlueOrdersScenarios()
+   * glueOrdersScenarios.getCustomerOrder(
+   *   'sonia@spryker.com`
+   *   'change123',
+   *   '00000001'
+   *   ).then((order) => {
+   *   cy.log('Order retrieved: ' + order)
+   *   })
+   */
+  getCustomerOrder = (
     email: string,
     password: string,
     orderReference: string
@@ -29,4 +41,4 @@ Cypress.Commands.add(
         })
     })
   }
-)
+}

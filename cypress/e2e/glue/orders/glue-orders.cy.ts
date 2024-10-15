@@ -7,14 +7,16 @@ import { Orders } from '@support/glue-endpoints/order/orders'
 import { validateSchema } from '@support/api-helper/api-helper'
 import { GlueAddressesScenarios } from '@support/scenarios/glue/glue-addresses-scenarios'
 import { GlueCartsScenarios } from '@support/scenarios/glue/glue-carts-scenarios'
+import { GlueCheckoutScenarios } from '@support/scenarios/glue/glue-checkout-scenarios'
 import ordersSchema from '@support/glue-endpoints/order/orders-response'
 
 const tokenEndpoint = new AccessTokens()
 const ordersEndpoint = new Orders()
 const glueAddressesScenarios = new GlueAddressesScenarios()
 const glueCartsScenarios = new GlueCartsScenarios()
+const glueCheckoutScenarios = new GlueCheckoutScenarios()
 
-let orderReference: string
+let createdOrderReference: string
 
 before(() => {
   // reset customer addresses
@@ -30,18 +32,20 @@ before(() => {
   )
 
   // place an order for retrieving order details
-  cy.placeOrderViaGlue(
-    customerCredentials.email,
-    customerCredentials.password,
-    productData.availableOffer.concreteSku,
-    checkoutData.glueShipment.id,
-    checkoutData.gluePayment.providerName,
-    checkoutData.gluePayment.methodName,
-    productData.availableOffer.offer,
-    productData.availableOffer.merchantReference
-  ).then((response: string) => {
-    orderReference = response
-  })
+  glueCheckoutScenarios
+    .placeOrder(
+      customerCredentials.email,
+      customerCredentials.password,
+      productData.availableOffer.concreteSku,
+      checkoutData.glueShipment.id,
+      checkoutData.gluePayment.providerName,
+      checkoutData.gluePayment.methodName,
+      productData.availableOffer.offer,
+      productData.availableOffer.merchantReference
+    )
+    .then(({ orderReference }) => {
+      createdOrderReference = orderReference
+    })
 })
 
 context('Customer orders', () => {
@@ -58,20 +62,20 @@ context('Customer orders', () => {
       })
       .then((token: string) => {
         return ordersEndpoint
-          .getCustomerOrder(token, orderReference)
+          .getCustomerOrder(token, createdOrderReference)
           .then((response) => {
             // validating response structure according to schema
             validateSchema(ordersSchema, response)
             expect(response.isOkStatusCode).to.be.true
             // asserting order reference is returned
-            expect(response.body.data.id).to.be.eq(orderReference)
+            expect(response.body.data.id).to.be.eq(createdOrderReference)
           })
       })
   })
 
   it('unauthorized order request fails via GLUE', () => {
     ordersEndpoint
-      .getCustomerOrder('', orderReference, false)
+      .getCustomerOrder('', createdOrderReference, false)
       .then((response) => {
         expect(response.status).to.be.eq(401)
       })

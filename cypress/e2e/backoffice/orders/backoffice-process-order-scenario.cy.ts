@@ -16,7 +16,7 @@ const glueCheckoutScenarios = new GlueCheckoutScenarios()
 const glueAddressesScenarios = new GlueAddressesScenarios()
 const omsTransitionScenarios = new OmsTransitionScenarios()
 
-let orderReference: string
+let createdOrderReference: string
 
 context('Order management', () => {
   before(function () {
@@ -38,8 +38,8 @@ context('Order management', () => {
         productData.availableOffer.offer,
         productData.availableOffer.merchantReference
       )
-      .then((response: string) => {
-        orderReference = response
+      .then(({ orderReference }) => {
+        createdOrderReference = orderReference
       })
   })
 
@@ -55,14 +55,14 @@ context('Order management', () => {
     // verify that the order placed in before hook exists in BO as the first order in the list
     backofficeOrderListPage
       .getOrderReference(0)
-      .should('have.text', orderReference)
+      .should('have.text', createdOrderReference)
     backofficeOrderListPage.viewOrderByPosition(0)
     // check that price for the product is still as it was in the shop
     backofficeOrderDetailsPage
       .getOrderSubtotal()
       .should('contain', productData.availableOffer.price)
     // clicks the oms trigger with the name 'Pay'
-    omsTransitionScenarios.triggerOmsEvent(orderReference, 'Pay')
+    omsTransitionScenarios.triggerOmsEvent(createdOrderReference, 'Pay')
     backofficeOrderDetailsPage
       .getSuccessfulOrderMessages()
       .should('contain', 'Status change triggered successfully.')
@@ -80,7 +80,7 @@ context('Order management', () => {
     // verify that the order placed in before hook exists in BO as the first order in the list
     backofficeOrderListPage
       .getOrderReference(0)
-      .should('have.text', orderReference)
+      .should('have.text', createdOrderReference)
     backofficeOrderListPage.viewOrderByPosition(0)
     // check that customer email is correct on the order details page
     backofficeOrderDetailsPage

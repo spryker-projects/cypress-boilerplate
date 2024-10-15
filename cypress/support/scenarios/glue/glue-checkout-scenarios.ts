@@ -36,7 +36,10 @@ export class GlueCheckoutScenarios {
     paymentMethod: string,
     offer: string,
     merchant: string
-  ): Cypress.Chainable<string> => {
+  ): Cypress.Chainable<{
+    orderReference: string
+    orderDetails: object | null
+  }> => {
     let token: string
     let cartId: string
 
@@ -71,7 +74,13 @@ export class GlueCheckoutScenarios {
               paymentMethod
             )
             .then((response) => {
-              return response.body.data.attributes.orderReference
+              const orderReference =
+                response.body.data.attributes.orderReference
+              const orderDetails = response.body.included.find(
+                (item) => item.type === 'orders' && item.id === orderReference
+              )?.attributes
+
+              return { orderReference, orderDetails }
             })
         })
     })

@@ -6,16 +6,18 @@ import { StorefrontCustomerOverviewPage } from '@support/page-objects/storefront
 import { StorefrontCustomerOrderDetailsPage } from '@support/page-objects/storefront/customer/storefront-customer-order-details-page'
 import { GlueAddressesScenarios } from '@support/scenarios/glue/glue-addresses-scenarios'
 import { GlueCartsScenarios } from '@support/scenarios/glue/glue-carts-scenarios'
+import { GlueCheckoutScenarios } from '@support/scenarios/glue/glue-checkout-scenarios'
 
 const glueAddressesScenarios = new GlueAddressesScenarios()
 const glueCartsScenarios = new GlueCartsScenarios()
+const glueCheckoutScenarios = new GlueCheckoutScenarios()
 const storefrontLoginPage = new StorefrontLoginPage()
 const storefrontCustomerOverviewPage = new StorefrontCustomerOverviewPage()
 const storefrontCustomerOrderDetailsPage =
   new StorefrontCustomerOrderDetailsPage()
 
 let orderGrandTotal: object
-let orderReference: string
+let createdOrderReference: string
 context('Customer orders', () => {
   before(() => {
     // reset customer addresses
@@ -30,26 +32,21 @@ context('Customer orders', () => {
       customerCredentials.password
     )
     // placing an order for processing
-    cy.placeOrderViaGlue(
-      customerCredentials.email,
-      customerCredentials.password,
-      productData.availableOffer.concreteSku,
-      checkoutData.glueShipment.id,
-      checkoutData.gluePayment.providerName,
-      checkoutData.gluePayment.methodName,
-      productData.availableOffer.offer,
-      productData.availableOffer.merchantReference
-    ).then((response: string) => {
-      orderReference = response
-      // getting order grand total for further comparison
-      cy.getCustomerOrder(
+    glueCheckoutScenarios
+      .placeOrder(
         customerCredentials.email,
         customerCredentials.password,
-        response
-      ).then((order: object) => {
-        orderGrandTotal = order.totals.grandTotal
+        productData.availableOffer.concreteSku,
+        checkoutData.glueShipment.id,
+        checkoutData.gluePayment.providerName,
+        checkoutData.gluePayment.methodName,
+        productData.availableOffer.offer,
+        productData.availableOffer.merchantReference
+      )
+      .then(({ orderReference, orderDetails }) => {
+        createdOrderReference = orderReference
+        orderGrandTotal = orderDetails.totals.grandTotal
       })
-    })
   })
 
   it('can see placed order in orders table', () => {
@@ -85,7 +82,7 @@ context('Customer orders', () => {
     storefrontCustomerOrderDetailsPage.getPageTitle().contains('Order Details')
     storefrontCustomerOrderDetailsPage
       .getOrderInfoBlockOrderReference()
-      .should('contain', orderReference)
+      .should('contain', createdOrderReference)
 
     // assert that the order grand total is displayed correctly in summary
     cy.formatDisplayPrice(orderGrandTotal).then((formattedGrandTotal) => {

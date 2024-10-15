@@ -65,15 +65,6 @@ declare namespace Cypress {
     ): Cypress.Chainable<any>
 
     /**
-     * @example cy.getCustomerOrder('sonia@spryker.com','change123','DE--1')
-     */
-    getCustomerOrder(
-      email: string,
-      password: string,
-      orderReference: string
-    ): Cypress.Chainable<object>
-
-    /**
      * @example cy.formatDisplayPrice(8999)
      */
     formatDisplayPrice(price: number): Cypress.Chainable<string>
