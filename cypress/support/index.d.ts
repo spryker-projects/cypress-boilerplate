@@ -63,5 +63,10 @@ declare namespace Cypress {
       desiredStatus: string,
       maxRetries: number
     ): Cypress.Chainable<any>
+
+    /**
+     * @example cy.formatDisplayPrice(8999)
+     */
+    formatDisplayPrice(price: number): Cypress.Chainable<string>
   }
 }
