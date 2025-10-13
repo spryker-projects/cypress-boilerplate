@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       PROGRESS_TYPE: plain
-      SPRYKER_PLATFORM_IMAGE: spryker/php:8.2
+      SPRYKER_PLATFORM_IMAGE: spryker/php:8.3
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
