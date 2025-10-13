@@ -4,7 +4,8 @@ export class StorefrontCartPage extends AbstractPage {
   protected PAGE_URL = Cypress.env('STOREFRONT_URL') + '/en/cart'
 
   getCartItemsList = (): Cypress.Chainable => {
-    return cy.get('cart-items-list')
+    // wait longer for the cart items list to appear after add-to-cart navigation or async rendering
+    return cy.get('cart-items-list', { timeout: 20000 })
   }
 
   getCartItem = (concreteSku: string): Cypress.Chainable => {

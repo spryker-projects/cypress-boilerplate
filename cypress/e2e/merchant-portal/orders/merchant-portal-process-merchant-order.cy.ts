@@ -54,7 +54,10 @@ context('Merchant Order management', () => {
     // if the tests are run on an env without active scheduler, we will need to trigger oms transition using CLI commands
     // make sure the location from which you run cypress tests has access to Spryker env
     omsTransitionScenarios.triggerOmsTransition()
-    omsTransitionScenarios.triggerOmsEvent(createdOrderReference, 'Pay')
+    // clicks the oms trigger with the name 'skip grace period'
+    omsTransitionScenarios.triggerOmsEvent(createdOrderReference, 'skip grace period', 20)
+    // clicks the oms trigger with the name 'Pay'
+    omsTransitionScenarios.triggerOmsEvent(createdOrderReference, 'Pay', 20)
     // if the tests are run on an env without active scheduler, e.g. local env, we will need to trigger oms transition using CLI commands
     // make sure the location from which you run cypress tests has access to Spryker env
     omsTransitionScenarios.triggerOmsTransition()
@@ -64,12 +67,15 @@ context('Merchant Order management', () => {
       userCredentials.merchantPortalUser.email,
       userCredentials.merchantPortalUser.password
     )
+    // wait until login redirects away from the login page (session established)
+    cy.url({ timeout: 20000 }).should('not.include', '/security-merchant-portal-gui/login')
+    // now navigate to orders page
     merchantOrderListPage.visit()
     // verify that the order placed in before hook exists and was passed to merchant
     merchantOrderListPage
-      .getOrderReference(0)
-      .should('contain.text', createdOrderReference)
-    merchantOrderListPage.viewOrderByPosition(0)
+      .getOrderInTableByReference(createdOrderReference)
+      .should('exist')
+      .click()
     // check that price for the product is still as it was in the shop
     merchantOrderDetailsPage
       .getOrderSubTotals()

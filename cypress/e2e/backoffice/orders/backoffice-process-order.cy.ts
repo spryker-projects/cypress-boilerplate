@@ -53,6 +53,10 @@ context('Order management', () => {
     backofficeOrderDetailsPage
       .getOrderSubtotal()
       .should('contain', productData.availableOffer.price)
+    cy.triggerOmsTransition()
+    cy.waitForOrderProcessing('grace period started', 20)
+    // clicks the oms trigger with the name 'skip grace period'
+    backofficeOrderDetailsPage.triggerOms('skip grace period')
     // clicks the oms trigger with the name 'Pay'
     backofficeOrderDetailsPage.triggerOms('Pay')
     backofficeOrderDetailsPage
