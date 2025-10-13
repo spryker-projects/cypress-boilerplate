@@ -27,7 +27,9 @@ context('Quick order', () => {
   })
 
   it('can search product by SKU and to cart', () => {
-    cy.intercept('GET', '**/product-search/product-concrete-search**').as('productSearch')
+    cy.intercept('GET', '**/product-search/product-concrete-search**').as(
+      'productSearch'
+    )
     storefrontQuickOrderScenarios.addProduct(
       quickOrderData.product.sku,
       quickOrderData.product.quantity
@@ -41,7 +43,9 @@ context('Quick order', () => {
   })
 
   it('can search product by name and add to cart', () => {
-    cy.intercept('GET', '**/product-search/product-concrete-search**').as('productSearch')
+    cy.intercept('GET', '**/product-search/product-concrete-search**').as(
+      'productSearch'
+    )
     storefrontQuickOrderScenarios.addProduct(
       quickOrderData.product.searchName,
       quickOrderData.product.quantity
@@ -57,7 +61,9 @@ context('Quick order', () => {
   it('can add filtered by merchant product to cart', () => {
     storefrontQuickOrderPage.selectMerchant(quickOrderData.merchantName)
 
-    cy.intercept('GET', '**/product-search/product-concrete-search**').as('productSearch')
+    cy.intercept('GET', '**/product-search/product-concrete-search**').as(
+      'productSearch'
+    )
     storefrontQuickOrderScenarios.addProduct(
       quickOrderData.product.sku,
       quickOrderData.product.quantity
@@ -71,7 +77,9 @@ context('Quick order', () => {
   })
 
   it('can add product for checkout', () => {
-    cy.intercept('GET', '**/product-search/product-concrete-search**').as('productSearch')
+    cy.intercept('GET', '**/product-search/product-concrete-search**').as(
+      'productSearch'
+    )
     storefrontQuickOrderScenarios.addProduct(
       quickOrderData.product.sku,
       quickOrderData.product.quantity

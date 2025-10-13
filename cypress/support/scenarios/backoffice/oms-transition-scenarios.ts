@@ -147,7 +147,9 @@ export class OmsTransitionScenarios {
         }
 
         retries++
-        cy.log(`Trigger "${triggerName}" not found. Reloading... [${retries}/${maxRetries}]`)
+        cy.log(
+          `Trigger "${triggerName}" not found. Reloading... [${retries}/${maxRetries}]`
+        )
         return cy.reload().then(() => {
           cy.wait(10000)
           return tryFindTrigger()

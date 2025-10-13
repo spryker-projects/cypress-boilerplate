@@ -36,11 +36,11 @@ export class BackofficeOrderDetailsPage extends AbstractPage {
   }
 
   triggerOms = (triggerName: string): void => {
-  this.getOmsTriggers()
-    .contains(triggerName, { timeout: 10000 })
-    .should('be.visible')
-    .click()
- }
+    this.getOmsTriggers()
+      .contains(triggerName, { timeout: 10000 })
+      .should('be.visible')
+      .click()
+  }
 
   private getOrderItems = (): Cypress.Chainable => {
     return cy.get('[data-qa="order-item-list"]')
