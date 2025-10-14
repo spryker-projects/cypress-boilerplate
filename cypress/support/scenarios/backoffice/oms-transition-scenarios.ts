@@ -54,37 +54,19 @@ export class OmsTransitionScenarios {
             })
           })
       } else if (isCI()) {
-        // In CI we avoid running docker/sdk via cy.exec because the host environment
-        // may not have SSH agent or COMPOSER_AUTH configured. Instead, post a
-        // dynamic-fixtures request to the Glue backend which will execute CLI
-        // commands inside the environment (no Composer auth required here).
-        const dynamicFixturesUrl = `${Cypress.env('GLUE_URL')}/dynamic-fixtures`
-        const operations = [
-          { type: 'cli-command', name: "console oms:check-condition" },
-          { type: 'cli-command', name: "console oms:check-timeout" },
-        ]
+        const glueBackendUrl =
+          Cypress.env('glueBackendUrl') || Cypress.env('GLUE_URL')
 
-        return cy
-          .request({
-            method: 'POST',
-            url: dynamicFixturesUrl,
-            headers: { 'Content-Type': 'application/vnd.api+json' },
-            body: {
-              data: {
-                type: 'dynamic-fixtures',
-                attributes: {
-                  operations: operations,
-                },
-              },
-            },
-            failOnStatusCode: false,
-          })
-          .then((response) => {
-            expect(
-              response.status,
-              `Dynamic fixtures request to ${dynamicFixturesUrl} failed: ${JSON.stringify(response.body)}`
-            ).to.be.oneOf([200, 201, 202])
-          })
+        if (!glueBackendUrl) {
+          throw new Error(
+            "Missing 'glueBackendUrl' or 'GLUE_URL' in CI environment variables."
+          )
+        }
+
+        return cy.runCliCommands([
+          'console oms:check-condition',
+          'console oms:check-timeout',
+        ])
       } else {
         // keep in mind that by default exec() command runs commands in the root Cypress tests directly
         // please provide the correct path to your Spryker env in 'PROJECT_LOCATION' env variable
