@@ -54,29 +54,36 @@ export class OmsTransitionScenarios {
             })
           })
       } else if (isCI()) {
-        const baseCommand = path ? `cd ${path} && docker/sdk` : 'docker/sdk'
+        // In CI we avoid running docker/sdk via cy.exec because the host environment
+        // may not have SSH agent or COMPOSER_AUTH configured. Instead, post a
+        // dynamic-fixtures request to the Glue backend which will execute CLI
+        // commands inside the environment (no Composer auth required here).
+        const dynamicFixturesUrl = `${Cypress.env('GLUE_URL')}/dynamic-fixtures`
+        const operations = [
+          { type: 'cli-command', name: "console oms:check-condition" },
+          { type: 'cli-command', name: "console oms:check-timeout" },
+        ]
 
         return cy
-          .exec(`${baseCommand} console oms:check-condition`, {
-            failOnNonZeroExit: true,
+          .request({
+            method: 'POST',
+            url: dynamicFixturesUrl,
+            headers: { 'Content-Type': 'application/vnd.api+json' },
+            body: {
+              data: {
+                type: 'dynamic-fixtures',
+                attributes: {
+                  operations: operations,
+                },
+              },
+            },
+            failOnStatusCode: false,
           })
-          .then((result) => {
+          .then((response) => {
             expect(
-              result.code,
-              `Command "${baseCommand} console oms:check-condition" failed with code ${result.code}. Output: ${result.stdout}. Error: ${result.stderr}`
-            ).to.eq(0)
-          })
-          .then(() => {
-            return cy
-              .exec(`${baseCommand} console oms:check-timeout`, {
-                failOnNonZeroExit: true,
-              })
-              .then((result) => {
-                expect(
-                  result.code,
-                  `Command "${baseCommand} console oms:check-timeout" failed with code ${result.code}. Output: ${result.stdout}. Error: ${result.stderr}`
-                ).to.eq(0)
-              })
+              response.status,
+              `Dynamic fixtures request to ${dynamicFixturesUrl} failed: ${JSON.stringify(response.body)}`
+            ).to.be.oneOf([200, 201, 202])
           })
       } else {
         // keep in mind that by default exec() command runs commands in the root Cypress tests directly
