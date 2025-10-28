@@ -2,12 +2,6 @@ declare module 'cypress-mochawesome-reporter/register'
 
 declare namespace Cypress {
   interface Chainable {
-    /**
-     * Runs one or more CLI commands via Glue backend dynamic-fixtures.
-     * @example
-     * cy.runCliCommands(['console oms:check-condition'])
-     */
-    runCliCommands(commands: string[]): Chainable<void>
 
     /**
      * @example cy.closeAllFlashMessages()

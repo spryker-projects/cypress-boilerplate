@@ -54,19 +54,35 @@ export class OmsTransitionScenarios {
             })
           })
       } else if (isCI()) {
-        const glueBackendUrl =
-          Cypress.env('glueBackendUrl') || Cypress.env('GLUE_URL')
-
-        if (!glueBackendUrl) {
-          throw new Error(
-            "Missing 'glueBackendUrl' or 'GLUE_URL' in CI environment variables."
-          )
+        // Use Docker CLI URL approach for CI environment (same as Docker)
+        const dockerCliUrl = Cypress.env('DOCKER_CLI_URL')
+        const checkConditionRequest = {
+          method: 'POST',
+          url: `${dockerCliUrl}/console`,
+          body: "APPLICATION_STORE='DE' COMMAND='console oms:check-condition' cli.sh",
+        }
+        const checkTimeoutRequest = {
+          method: 'POST',
+          url: `${dockerCliUrl}/console`,
+          body: "APPLICATION_STORE='DE' COMMAND='console oms:check-timeout' cli.sh",
         }
 
-        return cy.runCliCommands([
-          'console oms:check-condition',
-          'console oms:check-timeout',
-        ])
+        return cy
+          .api(checkConditionRequest)
+          .then((response) => {
+            expect(
+              response.status,
+              `Request "${JSON.stringify(checkConditionRequest)}" failed with status ${response.status}. Response: ${response.body}`
+            ).to.eq(200)
+          })
+          .then(() => {
+            return cy.api(checkTimeoutRequest).then((response) => {
+              expect(
+                response.status,
+                `Request "${JSON.stringify(checkTimeoutRequest)}" failed with status ${response.status}. Response: ${response.body}`
+              ).to.eq(200)
+            })
+          })
       } else {
         // keep in mind that by default exec() command runs commands in the root Cypress tests directly
         // please provide the correct path to your Spryker env in 'PROJECT_LOCATION' env variable
