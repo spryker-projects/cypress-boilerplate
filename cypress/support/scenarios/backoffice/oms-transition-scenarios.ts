@@ -55,40 +55,32 @@ export class OmsTransitionScenarios {
           })
       } else if (isCI()) {
         // Use Docker CLI URL approach for CI environment (same as Docker)
-        const dockerCliUrl = Cypress.env('DOCKER_GLUE_BACKEND_URL')
-        let commands = [
-          'console oms:check-condition',
-          'console oms:check-timeout',
-        ]
-        const operations = commands.map((command) => {
-          return {
-            type: 'cli-command',
-            name: command,
-          }
-        })
+        const dockerCliUrl = Cypress.env('GLUE_BACK_END_URL')
         const checkConditionRequest = {
-          data: {
-            type: 'dynamic-fixtures',
-            attributes: {
-              operations: operations,
-            },
-          },
-          timeout: 100000,
+          method: 'POST',
+          url: `${dockerCliUrl}/console`,
+          body: "APPLICATION_STORE='DE' COMMAND='console oms:check-condition' cli.sh",
+        }
+        const checkTimeoutRequest = {
+          method: 'POST',
+          url: `${dockerCliUrl}/console`,
+          body: "APPLICATION_STORE='DE' COMMAND='console oms:check-timeout' cli.sh",
         }
         return cy
-          .request({
-            method: 'POST',
-            url: Cypress.env().glueBackendUrl + '/dynamic-fixtures',
-            headers: {
-              'Content-Type': 'application/vnd.api+json',
-            },
-            body: checkConditionRequest,
-          })
+          .api(checkConditionRequest)
           .then((response) => {
             expect(
               response.status,
               `Request "${JSON.stringify(checkConditionRequest)}" failed with status ${response.status}. Response: ${response.body}`
             ).to.eq(200)
+          })
+          .then(() => {
+            return cy.api(checkTimeoutRequest).then((response) => {
+              expect(
+                response.status,
+                `Request "${JSON.stringify(checkTimeoutRequest)}" failed with status ${response.status}. Response: ${response.body}`
+              ).to.eq(200)
+            })
           })
       } else {
         // keep in mind that by default exec() command runs commands in the root Cypress tests directly
