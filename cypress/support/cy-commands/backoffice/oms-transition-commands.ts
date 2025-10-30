@@ -43,36 +43,31 @@ Cypress.Commands.add(
             })
           })
       } else if (isCI()) {
-        // Use Docker CLI URL approach for CI environment (same as Docker)
-        const dockerCliUrl = Cypress.env('DOCKER_CLI_URL')
-        const checkConditionRequest = {
-          method: 'POST',
-          url: `${dockerCliUrl}/console`,
-          body: "APPLICATION_STORE='DE' COMMAND='console oms:check-condition' cli.sh",
-        }
-        const checkTimeoutRequest = {
-          method: 'POST',
-          url: `${dockerCliUrl}/console`,
-          body: "APPLICATION_STORE='DE' COMMAND='console oms:check-timeout' cli.sh",
-        }
+        const baseCommand = path ? `cd ${path} && docker/sdk` : 'docker/sdk'
 
         return cy
-          .api(checkConditionRequest)
-          .then((response) => {
+          .exec(`${baseCommand} console oms:check-condition`, {
+            failOnNonZeroExit: true,
+          })
+          .then((result) => {
             expect(
-              response.status,
-              `Request "${JSON.stringify(checkConditionRequest)}" failed with status ${response.status}. Response: ${response.body}`
-            ).to.eq(200)
+              result.code,
+              `Command "${baseCommand} console oms:check-condition" failed with code ${result.code}. Output: ${result.stdout}. Error: ${result.stderr}`
+            ).to.eq(0)
           })
           .then(() => {
-            return cy.api(checkTimeoutRequest).then((response) => {
-              expect(
-                response.status,
-                `Request "${JSON.stringify(checkTimeoutRequest)}" failed with status ${response.status}. Response: ${response.body}`
-              ).to.eq(200)
-            })
+            return cy
+              .exec(`${baseCommand} console oms:check-timeout`, {
+                failOnNonZeroExit: true,
+              })
+              .then((result) => {
+                expect(
+                  result.code,
+                  `Command "${baseCommand} console oms:check-timeout" failed with code ${result.code}. Output: ${result.stdout}. Error: ${result.stderr}`
+                ).to.eq(0)
+              })
           })
-      } else {
+      }  else {
         // keep in mind that by default exec() command runs commands in the root Cypress tests directly
         // please provide the correct path to your Spryker env in 'PROJECT_LOCATION' env variable
         // and change the validation logic, as default is set not fail on non-zero exit
