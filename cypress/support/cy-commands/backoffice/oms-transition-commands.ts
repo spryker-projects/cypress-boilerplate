@@ -67,7 +67,7 @@ Cypress.Commands.add(
                 ).to.eq(0)
               })
           })
-      }  else {
+      } else {
         // keep in mind that by default exec() command runs commands in the root Cypress tests directly
         // please provide the correct path to your Spryker env in 'PROJECT_LOCATION' env variable
         // and change the validation logic, as default is set not fail on non-zero exit
