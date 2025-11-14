@@ -50,6 +50,21 @@ jobs:
         id: run_tests
         run: |
           pwd
+          current_dir="$PWD"
+          while true; do
+            echo "Checking $current_dir"
+            if [ -d "$current_dir/b2b-mp" ]; then
+              echo "✅ Found b2b-mp in $current_dir"
+              ls -a "$current_dir"
+              break
+            fi
+            if [ "$current_dir" = "/" ]; then
+              echo "❌ b2b-mp not found in any parent directory"
+              break
+            fi
+            current_dir="$(dirname "$current_dir")"
+          done
+
           npx cypress run --env environment=ci --headless --browser chrome
 
       - name: Upload artifacts
