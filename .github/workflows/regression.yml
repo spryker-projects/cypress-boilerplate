@@ -53,6 +53,8 @@ jobs:
             #without this any tests that need to run Spryker console commands will fail as unauthorized
             COMPOSER_AUTH: '{"github-oauth": {"github.com": "${{ secrets.GITHUB_TOKEN }}"}}'
         run: |
+          cd b2b-mp && docker/sdk console oms:check-condition
+          cd ..
           npx cypress run --env environment=ci --headless --browser chrome
 
       - name: Upload artifacts
