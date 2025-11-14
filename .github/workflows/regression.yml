@@ -49,6 +49,7 @@ jobs:
       - name: Run Tests
         id: run_tests
         run: |
+          pwd
           npx cypress run --env environment=ci --headless --browser chrome
 
       - name: Upload artifacts
