@@ -38,6 +38,7 @@ jobs:
 
       - name: Install B2B-MP Demoshop
         run: |
+          pwd
           git clone -b master --single-branch https://github.com/spryker-shop/b2b-demo-marketplace.git ./b2b-mp
           git clone https://github.com/spryker/docker-sdk.git ./b2b-mp/docker
           cd b2b-mp && docker/sdk boot -v deploy.yml
