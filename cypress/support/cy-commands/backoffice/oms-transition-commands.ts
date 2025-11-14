@@ -54,9 +54,6 @@ Cypress.Commands.add(
             }
           )
           .then((result) => {
-            cy.log('Command Output:', result.stdout)
-            cy.log('Command Error:', result.stderr)
-            cy.log('Command Exit Code:', result.code)
             expect(
               result.code,
               `Command "${baseCommand} console oms:check-condition" failed with code ${result.code}. Output: ${result.stdout}. Error: ${result.stderr}`
