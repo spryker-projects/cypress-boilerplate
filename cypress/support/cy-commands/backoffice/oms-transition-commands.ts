@@ -47,10 +47,16 @@ Cypress.Commands.add(
         const baseCommand = path ? `cd ${path} && docker/sdk` : 'docker/sdk'
 
         return cy
-          .exec(`${baseCommand} console oms:check-condition`, {
-            failOnNonZeroExit: true,
-          })
+          .exec(
+            `COMPOSER_AUTH='${Cypress.env('COMPOSER_AUTH')}' ${baseCommand} console oms:check-condition`,
+            {
+              failOnNonZeroExit: true,
+            }
+          )
           .then((result) => {
+            cy.log('Command Output:', result.stdout)
+            cy.log('Command Error:', result.stderr)
+            cy.log('Command Exit Code:', result.code)
             expect(
               result.code,
               `Command "${baseCommand} console oms:check-condition" failed with code ${result.code}. Output: ${result.stdout}. Error: ${result.stderr}`

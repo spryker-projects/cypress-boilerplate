@@ -49,13 +49,11 @@ jobs:
       - name: Run Tests
         id: run_tests
         env:
-            #You need to store a Github token with appropriate permissions in the repo secrets as GITHUB_TOKEN for this to work
-            #without this any tests that need to run Spryker console commands will fail as unauthorized
-            COMPOSER_AUTH: '{"github-oauth": {"github.com": "${{ secrets.GITHUB_TOKEN }}"}}'
+          # You need to store a Github token with appropriate permissions in the repo secrets as GITHUB_TOKEN for this or another authorization method to work
+          # without this any tests that need to run Spryker console commands will fail as unauthorized
+          COMPOSER_AUTH: '{"github-oauth": {"github.com": "${{ secrets.GITHUB_TOKEN }}"}}'
         run: |
-          cd b2b-mp && docker/sdk console oms:check-condition
-          cd ..
-          npx cypress run --env environment=ci --headless --browser chrome
+          npx cypress run --env environment=ci,COMPOSER_AUTH=$COMPOSER_AUTH --headless --browser chrome
 
       - name: Upload artifacts
         if: failure()
