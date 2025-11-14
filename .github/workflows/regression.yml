@@ -38,7 +38,6 @@ jobs:
 
       - name: Install B2B-MP Demoshop
         run: |
-          pwd
           git clone -b master --single-branch https://github.com/spryker-shop/b2b-demo-marketplace.git ./b2b-mp
           git clone https://github.com/spryker/docker-sdk.git ./b2b-mp/docker
           cd b2b-mp && docker/sdk boot -v deploy.yml
@@ -49,23 +48,11 @@ jobs:
 
       - name: Run Tests
         id: run_tests
+        env:
+            #You need to store a Github token with appropriate permissions in the repo secrets as GITHUB_TOKEN for this to work
+            #without this any tests that need to run Spryker console commands will fail as unauthorized
+            COMPOSER_AUTH: '{"github-oauth": {"github.com": "${{ secrets.GITHUB_TOKEN }}"}}'
         run: |
-          pwd
-          current_dir="$PWD"
-          while true; do
-            echo "Checking $current_dir"
-            if [ -d "$current_dir/b2b-mp" ]; then
-              echo "✅ Found b2b-mp in $current_dir"
-              ls -a "$current_dir"
-              break
-            fi
-            if [ "$current_dir" = "/" ]; then
-              echo "❌ b2b-mp not found in any parent directory"
-              break
-            fi
-            current_dir="$(dirname "$current_dir")"
-          done
-
           npx cypress run --env environment=ci --headless --browser chrome
 
       - name: Upload artifacts
