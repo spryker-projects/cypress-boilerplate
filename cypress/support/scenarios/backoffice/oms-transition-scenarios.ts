@@ -54,6 +54,7 @@ export class OmsTransitionScenarios {
             })
           })
       } else if (isCI()) {
+        // these commands will fail, if the CI workflow does not include a valid authentication for docker/sdk cli commands
         const baseCommand = path ? `cd ${path} && docker/sdk` : 'docker/sdk'
 
         return cy

@@ -50,7 +50,7 @@ jobs:
         id: run_tests
         env:
           # You need to store a Github token with appropriate permissions in the repo secrets as GITHUB_TOKEN for this or another authorization method to work
-          # without this any tests that need to run Spryker console commands will fail as unauthorized
+          # without this any tests that need to run Spryker docker/sdk cli console commands will fail as unauthorized
           COMPOSER_AUTH: '{"github-oauth": {"github.com": "${{ secrets.GITHUB_TOKEN }}"}}'
         run: |
           npx cypress run --env environment=ci,COMPOSER_AUTH=$COMPOSER_AUTH --headless --browser chrome

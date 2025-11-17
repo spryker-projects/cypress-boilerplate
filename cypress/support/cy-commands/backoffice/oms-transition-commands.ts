@@ -43,7 +43,7 @@ Cypress.Commands.add(
             })
           })
       } else if (isCI()) {
-        // these commands will fail, if the CI workflow does not include a valid COMPOSER_AUTH env variable with a GitHub token
+        // these commands will fail, if the CI workflow does not include a valid authentication for docker/sdk cli commands
         const baseCommand = path ? `cd ${path} && docker/sdk` : 'docker/sdk'
 
         return cy
