@@ -23,13 +23,10 @@ context('Order management', () => {
     cy.exec('cd b2b-mp && docker/sdk console oms:check-condition',            
       {
         failOnNonZeroExit: false,
+        timeout: 30000,
       }).then(({ code, stdout, stderr }) => {
       expect(code, `Command failed. Output:\n${stdout}\n${stderr}`).to.eq(0)
     })
-    cy.exec('cd b2b-mp && docker/sdk console oms:check-condition',            
-      {
-        failOnNonZeroExit: true,
-      })
     // reset customer addresses
     glueAddressesScenarios.deleteAllCustomerAddresses(
       customerCredentials.email,
