@@ -59,7 +59,7 @@ export class OmsTransitionScenarios {
 
         return cy
           .exec(
-            `COMPOSER_AUTH='${Cypress.env('COMPOSER_AUTH')}' ${baseCommand} console oms:check-condition`,
+            `${baseCommand} console oms:check-condition`,
             {
               failOnNonZeroExit: true,
             }

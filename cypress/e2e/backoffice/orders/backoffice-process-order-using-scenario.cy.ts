@@ -20,13 +20,6 @@ let createdOrderReference: string
 
 context('Order management', () => {
   before(function () {
-    cy.exec('cd b2b-mp && docker/sdk console oms:check-condition',            
-      {
-        failOnNonZeroExit: false,
-        timeout: 30000,
-      }).then(({ code, stdout, stderr }) => {
-      expect(code, `Command failed. Output:\n${stdout}\n${stderr}`).to.eq(0)
-    })
     // reset customer addresses
     glueAddressesScenarios.deleteAllCustomerAddresses(
       customerCredentials.email,
