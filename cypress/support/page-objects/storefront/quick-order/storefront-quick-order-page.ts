@@ -31,9 +31,11 @@ export class StorefrontQuickOrderPage extends AbstractPage {
   }
 
   applySuggestedProduct = (skuOrName: string): Cypress.Chainable => {
+    // Wait for suggestions to appear and contain the expected text, then click.
     return this.getSuggestedProductsList()
       .filter(':visible')
-      .contains(skuOrName)
+      .should('contain', skuOrName, { timeout: 20000 })
+      .contains(skuOrName, { timeout: 20000 })
       .click()
   }
 

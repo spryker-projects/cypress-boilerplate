@@ -54,6 +54,7 @@ export class OmsTransitionScenarios {
             })
           })
       } else if (isCI()) {
+        // These commands will fail, if the CI workflow does not include a valid authentication for docker/sdk cli commands
         const baseCommand = path ? `cd ${path} && docker/sdk` : 'docker/sdk'
 
         return cy
@@ -91,7 +92,7 @@ export class OmsTransitionScenarios {
           .then((result) => {
             expect(
               result.code,
-              `Command "${baseCommand} console oms:check-condition" failed with code ${result.code}. Output: ${result.stdout}. Error: ${result.stderr}`
+              `Command "${baseCommand} console oms:check-condition" LOCAL failed with code ${result.code}. Output: ${result.stdout}. Error: ${result.stderr}`
             ).to.not.eq(0)
           })
           .then(() => {
@@ -113,6 +114,54 @@ export class OmsTransitionScenarios {
   }
 
   /**
+   * Wait for an OMS trigger button to appear on the Backoffice order details page.
+   *
+   * Looks for a button whose visible text contains `triggerName`. If not found,
+   * the page is reloaded and the check is retried up to `maxRetries` times,
+   * waiting 10s between attempts. Resolves when the trigger is found or throws
+   * an Error after exhausting retries.
+   *
+   * @param triggerName - visible text of the trigger to wait for
+   * @param maxRetries - number of reload attempts before failing (default: 2)
+   *
+   * Notes: uses jQuery `:contains()` (case-sensitive substring match) and performs
+   * full page reloads; consider polling an API instead of reloads if needed.
+   */
+  private waitForOmsTrigger = (
+    triggerName: string,
+    maxRetries = 2
+  ): Cypress.Chainable => {
+    let retries = 0
+
+    const tryFindTrigger = (): Cypress.Chainable => {
+      return backofficeOrderDetailsPage.getOmsTriggers().then(($triggers) => {
+        const match = $triggers.find(`button:contains("${triggerName}")`)
+
+        if (match.length > 0) {
+          return cy.wrap(null)
+        }
+
+        if (retries >= maxRetries) {
+          throw new Error(
+            `Trigger "${triggerName}" not found after ${maxRetries} reload(s).`
+          )
+        }
+
+        retries++
+        cy.log(
+          `Trigger "${triggerName}" not found. Reloading... [${retries}/${maxRetries}]`
+        )
+        return cy.reload().then(() => {
+          cy.wait(10000)
+          return tryFindTrigger()
+        })
+      })
+    }
+
+    return tryFindTrigger()
+  }
+
+  /**
    * Triggers an OMS event for a given order through the UI in back office.
    *
    * @example
@@ -124,7 +173,8 @@ export class OmsTransitionScenarios {
    */
   triggerOmsEvent = (
     orderReference: string,
-    eventName: string
+    eventName: string,
+    maxRetries: number
   ): Cypress.Chainable => {
     return backofficeLoginPage
       .login(
@@ -133,6 +183,7 @@ export class OmsTransitionScenarios {
       )
       .then(() => backofficeOrderListPage.visit())
       .then(() => backofficeOrderListPage.viewOrderByReference(orderReference))
+      .then(() => this.waitForOmsTrigger(eventName, maxRetries)) // try reload up to 2 times
       .then(() => backofficeOrderDetailsPage.triggerOms(eventName))
   }
 
@@ -172,7 +223,6 @@ export class OmsTransitionScenarios {
         } else {
           // Status not found, reload and try again
           return cy.reload().then(() => {
-            // eslint-disable-next-line cypress/no-unnecessary-waiting
             cy.wait(10000)
             return findStatusWithText(desiredStatus, retries + 1)
           })

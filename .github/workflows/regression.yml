@@ -10,15 +10,15 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  docker-php-8-2-mariadb-cypress:
+  docker-php-8-4-mariadb-cypress:
     if: >
       (github.event_name == 'pull_request' && github.event.label.name == 'run vs demoshop') || 
       (github.event_name == 'workflow_dispatch')
-    name: 'Docker / PHP 8.2 / MariaDB / Cypress '
+    name: 'Docker / PHP 8.4 / MariaDB / Cypress '
     runs-on: ubuntu-latest
     env:
       PROGRESS_TYPE: plain
-      SPRYKER_PLATFORM_IMAGE: spryker/php:8.2
+      SPRYKER_PLATFORM_IMAGE: spryker/php:8.4
     steps:
       - name: Checkout code
         uses: actions/checkout@v4

@@ -43,6 +43,7 @@ Cypress.Commands.add(
             })
           })
       } else if (isCI()) {
+        // These commands will fail, if the CI workflow does not include a valid authentication for docker/sdk cli commands
         const baseCommand = path ? `cd ${path} && docker/sdk` : 'docker/sdk'
 
         return cy
@@ -141,7 +142,6 @@ Cypress.Commands.add(
         } else {
           // Status not found, reload and try again
           return cy.reload().then(() => {
-            // eslint-disable-next-line cypress/no-unnecessary-waiting
             cy.wait(10000)
             return findStatusWithText(desiredStatus, retries + 1)
           })

@@ -61,8 +61,14 @@ context('Order management', () => {
     backofficeOrderDetailsPage
       .getOrderSubtotal()
       .should('contain', productData.availableOffer.price)
+    // clicks the oms trigger with the name 'skip grace period'
+    omsTransitionScenarios.triggerOmsEvent(
+      createdOrderReference,
+      'skip grace period',
+      20
+    )
     // clicks the oms trigger with the name 'Pay'
-    omsTransitionScenarios.triggerOmsEvent(createdOrderReference, 'Pay')
+    omsTransitionScenarios.triggerOmsEvent(createdOrderReference, 'Pay', 20)
     backofficeOrderDetailsPage
       .getSuccessfulOrderMessages()
       .should('contain', 'Status change triggered successfully.')

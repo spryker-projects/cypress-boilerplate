@@ -12,6 +12,16 @@ export class MerchantOrderListPage extends AbstractPage {
       .eq(orderPosition)
   }
 
+  getOrderInTableByReference = (orderReference: string): Cypress.Chainable => {
+    return cy
+      .get('mp-sales-orders-table')
+      .find('tbody')
+      .find('tr')
+      .filter((_, row) => {
+        return Cypress.$(row).find('td').eq(0).text().trim() === orderReference
+      })
+  }
+
   getOrderReference = (orderPosition: number): Cypress.Chainable => {
     return this.getOrderInTableByPosition(orderPosition).find('td').eq(0)
   }
