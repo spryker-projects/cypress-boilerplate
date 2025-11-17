@@ -22,6 +22,12 @@ context('Order management', () => {
   before(function () {
     cy.exec('cd b2b-mp && docker/sdk console oms:check-condition',            
       {
+        failOnNonZeroExit: false,
+      }).then(({ code, stdout, stderr }) => {
+      expect(code, `Command failed. Output:\n${stdout}\n${stderr}`).to.eq(0)
+    })
+    cy.exec('cd b2b-mp && docker/sdk console oms:check-condition',            
+      {
         failOnNonZeroExit: true,
       })
     // reset customer addresses
