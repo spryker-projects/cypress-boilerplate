@@ -5,36 +5,46 @@ This repository provides a comprehensive boilerplate designed to help developers
 ### Key Features
 
 - **Comprehensive Test Coverage:**
+
   - **Yves:** Example tests for the checkout process.
   - **Backoffice:** Example tests for order management.
   - **Merchant Portal:** Example tests for order management.
   - **Glue API:** Example tests for the checkout process including response schema validation, ensuring that API responses adhere to the expected format.
 
 - **Page Objects:**
+
   - Utilizes the Page Object pattern to promote code reuse and simplify test maintenance.
 
 - **Custom Commands and Scenarios:**
+
   - Includes Cypress custom commands and scenarios to streamline repetitive actions in tests.
 
 - **CLI Commands from Within Cypress:**
+
   - Execute CLI commands directly from within Cypress tests for enhanced control and flexibility.
 
 - **Static Fixtures:**
+
   - Uses static fixtures to manage test data effectively, ensuring consistency and reliability in test execution.
 
 - **Environment Configurations:**
+
   - Supports running tests across multiple environments (local, staging, production) with minimal configuration changes.
 
 - **Docker Integration:**
+
   - Seamlessly integrates with Docker using Spryker `docker/sdk`, allowing tests to be executed within a containerized environment.
 
 - **Continuous Integration (CI):**
+
   - Easily integrates with CI pipelines for automated test execution, including detailed reporting.
 
 - **Naming Conventions:**
+
   - Adopts standardized naming conventions for test files, Page Objects, and other assets to maintain consistency across the project.
 
 - **Code Quality Tools:**
+
   - Includes ESLint and Prettier for maintaining code quality and consistency across the test suite.
 
 - **Reporting:**
