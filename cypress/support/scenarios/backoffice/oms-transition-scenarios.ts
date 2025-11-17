@@ -58,12 +58,9 @@ export class OmsTransitionScenarios {
         const baseCommand = path ? `cd ${path} && docker/sdk` : 'docker/sdk'
 
         return cy
-          .exec(
-            `${baseCommand} console oms:check-condition`,
-            {
-              failOnNonZeroExit: true,
-            }
-          )
+          .exec(`${baseCommand} console oms:check-condition`, {
+            failOnNonZeroExit: true,
+          })
           .then((result) => {
             expect(
               result.code,
