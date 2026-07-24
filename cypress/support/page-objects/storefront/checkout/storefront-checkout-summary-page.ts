@@ -10,7 +10,52 @@ export class StorefrontCheckoutSummaryPage extends AbstractPage {
   }
 
   getGrandTotal = (): Cypress.Chainable => {
-    return cy.get(summaryForm).find('.summary-overview__item--total')
+    // the order summary totals live in a sibling block before <form name="summaryForm">,
+    // not inside it
+    return cy
+      .get('[data-qa="component summary-overview"]')
+      .find('.summary-overview__item--total')
+  }
+
+  getGrandTotalAmount = (): Cypress.Chainable => {
+    return this.getGrandTotal().find(
+      'strong.summary-overview__title--color-gray'
+    )
+  }
+
+  // "Cost Center Control" widget (Purchasing Control feature) — only rendered when the
+  // customer's business unit has active cost centers requiring selection before checkout
+  getCostCenterSelect = (): Cypress.Chainable => {
+    return cy.get('#idCostCenter')
+  }
+
+  getBudgetSelect = (): Cypress.Chainable => {
+    return cy.get('#idBudget')
+  }
+
+  getCostCenterApplyButton = (): Cypress.Chainable => {
+    return cy.get('cost-center-selector').find('button[type="submit"]')
+  }
+
+  selectCostCenter = (costCenterName: string): void => {
+    cy.intercept('POST', '**/company/cost-center/update-quote').as(
+      'costCenterUpdateQuote'
+    )
+    this.getCostCenterSelect().select(costCenterName, { force: true })
+    cy.wait('@costCenterUpdateQuote')
+  }
+
+  selectBudget = (budgetNameContains: string): void => {
+    this.getBudgetSelect()
+      .find('option')
+      .contains(budgetNameContains)
+      .then(($option) => {
+        this.getBudgetSelect().select($option.text().trim(), { force: true })
+      })
+  }
+
+  applyCostCenterAndBudget = (): void => {
+    this.getCostCenterApplyButton().click()
   }
 
   submitSummaryForm = (): void => {

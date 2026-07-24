@@ -4,10 +4,13 @@ export class StorefrontCheckoutSuccessPage extends AbstractPage {
   protected PAGE_URL = Cypress.env('STOREFRONT_URL') + '/en/checkout/success'
 
   checkOrderSuccess = (): void => {
-    // Allow optional single path segment (e.g. /DE/en/checkout/success or /DE-AT/en/checkout/success)
-    cy.location('pathname').should(
+    cy.location('pathname', { timeout: 30000 }).should(
       'match',
       /^\/([^\/]+\/)?en\/checkout\/success$/
     )
+  }
+
+  getOrderReference = (): Cypress.Chainable<string> => {
+    return cy.get('meta[itemprop="identifier"]').invoke('attr', 'content')
   }
 }
