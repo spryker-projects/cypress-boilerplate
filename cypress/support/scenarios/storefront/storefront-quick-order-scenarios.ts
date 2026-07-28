@@ -15,10 +15,14 @@ export class StorefrontQuickOrderScenarios {
     if (merchantName) {
       this.quickOrderPage.selectProductMerchant(rowIndex, merchantName)
     }
+    this.quickOrderPage.getQuantityInput(rowIndex).should('have.value', '1')
 
     if (quantity > 1) {
       for (let i = 1; i < quantity; i++) {
         this.quickOrderPage.incrementQuantity(rowIndex)
+        this.quickOrderPage
+          .getQuantityInput(rowIndex)
+          .should('have.value', String(i + 1))
       }
     }
 

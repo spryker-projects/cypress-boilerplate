@@ -3,7 +3,13 @@ import { AbstractPage } from '../../abstract-page'
 export class StorefrontCartFlyout extends AbstractPage {
   protected PAGE_URL = ''
 
-  getCartFlyoutIcon = (): Cypress.Chainable => {
-    return cy.get('cart-counter')
+  getCartBadge = (): Cypress.Chainable => {
+    return cy.get('[data-qa="component header-cart-pill"] .cart-trigger__badge')
+  }
+
+  getCartTrigger = (): Cypress.Chainable => {
+    return cy.get(
+      '[data-qa="component header-cart-pill"] .js-header-cart-pill__trigger'
+    )
   }
 }

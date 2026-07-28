@@ -58,16 +58,21 @@ context('Customer checkout', () => {
       .getProductName()
       .should('contain', productData.availableProduct.name)
     productDetailsPage.addProductToCart()
-    cartIcon.getCartFlyoutIcon().click()
+    cartIcon.getCartTrigger().click()
     // another assertion checking that price in cart is as expected
     cartPage
-      .getCartItem(productData.availableProduct.concreteSku)
-      .find('[itemprop="price"]')
+      .getCartItemPrice(productData.availableProduct.concreteSku)
       .should('contain', productData.availableProduct.price)
     cartPage.getCheckoutButton().click()
     checkoutAddress.provideExistingAddress()
     checkoutShipping.provideShipment(checkoutData.storefrontShipment.name)
     checkoutPayment.providePayment(checkoutData.storefrontPayment.name)
+    // this customer's business unit has the Purchasing Control feature enabled, so a
+    // cost center and budget must be selected on the summary page before an order can
+    // be placed
+    checkoutSummary.selectCostCenter(checkoutData.storefrontCostCenter.name)
+    checkoutSummary.selectBudget(checkoutData.storefrontBudget.name)
+    checkoutSummary.applyCostCenterAndBudget()
     checkoutSummary.completeOrder()
     checkoutSuccess.checkOrderSuccess()
   })

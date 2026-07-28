@@ -2,22 +2,41 @@ import customerCredentials from '@fixtures/customer-data.json'
 import productData from '@fixtures/product-data.json'
 import checkoutData from '@fixtures/checkout-data.json'
 import { StorefrontLoginPage } from '@support/page-objects/storefront/login/storefront-login-page'
+import { StorefrontSearchResultsPage } from '@support/page-objects/storefront/search/storefront-search-results-page'
+import { StorefrontProductDetailsPage } from '@support/page-objects/storefront/product/storefront-product-details-page'
+import { StorefrontCartPage } from '@support/page-objects/storefront/cart/storefront-cart-page'
+import { StorefrontCartFlyout } from '@support/page-objects/storefront/cart/storefront-cart-flyout'
+import { StorefrontCheckoutAddressPage } from '@support/page-objects/storefront/checkout/storefront-checkout-address-page'
+import { StorefrontCheckoutShippingPage } from '@support/page-objects/storefront/checkout/storefront-checkout-shipping-page'
+import { StorefrontCheckoutPaymentPage } from '@support/page-objects/storefront/checkout/storefront-checkout-payment-page'
+import { StorefrontCheckoutSummaryPage } from '@support/page-objects/storefront/checkout/storefront-checkout-summary-page'
+import { StorefrontCheckoutSuccessPage } from '@support/page-objects/storefront/checkout/storefront-checkout-success-page'
 import { StorefrontCustomerOverviewPage } from '@support/page-objects/storefront/customer/storefront-customer-overview-page'
 import { StorefrontCustomerOrderDetailsPage } from '@support/page-objects/storefront/customer/storefront-customer-order-details-page'
 import { GlueAddressesScenarios } from '@support/scenarios/glue/glue-addresses-scenarios'
 import { GlueCartsScenarios } from '@support/scenarios/glue/glue-carts-scenarios'
-import { GlueCheckoutScenarios } from '@support/scenarios/glue/glue-checkout-scenarios'
+import { StorefrontCartScenarios } from '@support/scenarios/storefront/storefront-cart-scenarios'
 
 const glueAddressesScenarios = new GlueAddressesScenarios()
 const glueCartsScenarios = new GlueCartsScenarios()
-const glueCheckoutScenarios = new GlueCheckoutScenarios()
+const storefrontCartScenarios = new StorefrontCartScenarios()
 const storefrontLoginPage = new StorefrontLoginPage()
+const search = new StorefrontSearchResultsPage()
+const productDetailsPage = new StorefrontProductDetailsPage()
+const cartPage = new StorefrontCartPage()
+const cartIcon = new StorefrontCartFlyout()
+const checkoutAddress = new StorefrontCheckoutAddressPage()
+const checkoutShipping = new StorefrontCheckoutShippingPage()
+const checkoutPayment = new StorefrontCheckoutPaymentPage()
+const checkoutSummary = new StorefrontCheckoutSummaryPage()
+const checkoutSuccess = new StorefrontCheckoutSuccessPage()
 const storefrontCustomerOverviewPage = new StorefrontCustomerOverviewPage()
 const storefrontCustomerOrderDetailsPage =
   new StorefrontCustomerOrderDetailsPage()
 
-let orderGrandTotal: object
+let orderGrandTotal: string
 let createdOrderReference: string
+
 context('Customer orders', () => {
   before(() => {
     // reset customer addresses
@@ -31,22 +50,43 @@ context('Customer orders', () => {
       customerCredentials.email,
       customerCredentials.password
     )
-    // placing an order for processing
-    glueCheckoutScenarios
-      .placeOrder(
-        customerCredentials.email,
-        customerCredentials.password,
-        productData.availableOffer.concreteSku,
-        checkoutData.glueShipment.id,
-        checkoutData.gluePayment.providerName,
-        checkoutData.gluePayment.methodName,
-        productData.availableOffer.offer,
-        productData.availableOffer.merchantReference
-      )
-      .then(({ orderReference, orderDetails }) => {
-        createdOrderReference = orderReference
-        orderGrandTotal = orderDetails.totals.grandTotal
+
+    // place an order through the real storefront checkout flow — this customer's
+    // business unit has the Purchasing Control feature enabled, so a cost center and
+    // budget must be selected on the summary page before an order can be placed
+    // (there is no Glue API support for this, so it can't be set up via the API)
+    storefrontLoginPage.login(
+      customerCredentials.email,
+      customerCredentials.password
+    )
+    storefrontCartScenarios.createNewCart()
+    search.findProduct(productData.availableProduct.abstractSku)
+    productDetailsPage
+      .getProductName()
+      .should('contain', productData.availableProduct.name)
+    productDetailsPage.addProductToCart()
+    cartIcon.getCartTrigger().click()
+    cartPage
+      .getCartItemPrice(productData.availableProduct.concreteSku)
+      .should('contain', productData.availableProduct.price)
+    cartPage.getCheckoutButton().click()
+    checkoutAddress.provideExistingAddress()
+    checkoutShipping.provideShipment(checkoutData.storefrontShipment.name)
+    checkoutPayment.providePayment(checkoutData.storefrontPayment.name)
+    checkoutSummary.selectCostCenter(checkoutData.storefrontCostCenter.name)
+    checkoutSummary.selectBudget(checkoutData.storefrontBudget.name)
+    checkoutSummary.applyCostCenterAndBudget()
+    checkoutSummary
+      .getGrandTotalAmount()
+      .invoke('text')
+      .then((text) => {
+        orderGrandTotal = text.trim()
       })
+    checkoutSummary.completeOrder()
+    checkoutSuccess.checkOrderSuccess()
+    checkoutSuccess.getOrderReference().then((reference) => {
+      createdOrderReference = reference
+    })
   })
 
   it('can see placed order in orders table', () => {
@@ -60,11 +100,9 @@ context('Customer orders', () => {
     storefrontCustomerOverviewPage.getOrdersTable().should('be.visible')
 
     // assert that the first order row contains the correct grand total of the order
-    cy.formatDisplayPrice(orderGrandTotal).then((formattedGrandTotal) => {
-      storefrontCustomerOverviewPage
-        .getFirstOrderRowPrice()
-        .should('contain', formattedGrandTotal)
-    })
+    storefrontCustomerOverviewPage
+      .getFirstOrderRowPrice()
+      .should('contain', orderGrandTotal)
   })
 
   it('can open order details page', () => {
@@ -85,10 +123,8 @@ context('Customer orders', () => {
       .should('contain', createdOrderReference)
 
     // assert that the order grand total is displayed correctly in summary
-    cy.formatDisplayPrice(orderGrandTotal).then((formattedGrandTotal) => {
-      storefrontCustomerOrderDetailsPage
-        .getOrderSummaryGrandTotal()
-        .should('contain', formattedGrandTotal)
-    })
+    storefrontCustomerOrderDetailsPage
+      .getOrderSummaryGrandTotal()
+      .should('contain', orderGrandTotal)
   })
 })

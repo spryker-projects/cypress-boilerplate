@@ -5,7 +5,7 @@ export class BackofficeOrderListPage extends AbstractPage {
 
   getOrderInTableByPosition = (orderPosition: number): Cypress.Chainable => {
     return cy
-      .get('.dataTables_scrollBody')
+      .get('[data-qa="data-table"]')
       .find('tbody')
       .find('tr')
       .eq(orderPosition)
@@ -13,7 +13,7 @@ export class BackofficeOrderListPage extends AbstractPage {
 
   getOrderInTableByReference = (orderReference: string): Cypress.Chainable => {
     return cy
-      .get('.dataTables_scrollBody')
+      .get('[data-qa="data-table"]')
       .find('tbody')
       .find('tr')
       .contains(orderReference)

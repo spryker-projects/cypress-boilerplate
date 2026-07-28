@@ -1,4 +1,4 @@
-import customerCredentials from '@fixtures/customer-data.json'
+import customerCredentials from '@fixtures/customer-order-data.json'
 import productData from '@fixtures/product-data.json'
 import checkoutData from '@fixtures/checkout-data.json'
 import userCredentials from '@fixtures/user-data.json'

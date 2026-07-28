@@ -11,7 +11,11 @@ export class StorefrontCartPage extends AbstractPage {
   getCartItem = (concreteSku: string): Cypress.Chainable => {
     return this.getCartItemsList()
       .contains('span[itemprop="sku"]', concreteSku)
-      .parents('article.product-cart-item')
+      .parents('[data-qa="component product-cart-item"]')
+  }
+
+  getCartItemPrice = (concreteSku: string): Cypress.Chainable => {
+    return this.getCartItem(concreteSku).find('[itemprop="price"]')
   }
 
   getCheckoutButton = (): Cypress.Chainable => {

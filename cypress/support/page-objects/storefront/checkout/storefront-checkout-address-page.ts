@@ -9,6 +9,7 @@ export class StorefrontCheckoutAddressPage extends AbstractPage {
     return cy
       .get(addressForm)
       .find('[data-qa*="checkout-full-addresses"]')
+      .filter(':visible')
       .first()
   }
 
@@ -59,11 +60,17 @@ export class StorefrontCheckoutAddressPage extends AbstractPage {
   }
 
   getBillingTheSameAsShippingCheckbox = (): Cypress.Chainable => {
-    return cy.get(addressForm).find('#addressesForm_billingSameAsShipping')
+    // the wrapping <toggler-checkbox> custom element shares the same id as its inner
+    // <input> — scope to the input tag so cy.get doesn't resolve to the wrapper
+    return cy.get(addressForm).find('input#addressesForm_billingSameAsShipping')
   }
 
   getBillingAddressDropdown = (): Cypress.Chainable => {
-    return cy.get(addressForm).find('[data-qa="checkout-full-addresses"]').eq(1)
+    return cy
+      .get(addressForm)
+      .find('[data-qa="checkout-full-addresses"]')
+      .filter(':visible')
+      .eq(1)
   }
 
   selectFirstBusinessAddressAvailableForShipping = (): void => {
@@ -77,6 +84,7 @@ export class StorefrontCheckoutAddressPage extends AbstractPage {
 
   provideExistingAddress = (): void => {
     this.selectFirstBusinessAddressAvailableForShipping()
+    this.getBillingTheSameAsShippingCheckbox().check({ force: true })
     this.submitAddress()
   }
 }
